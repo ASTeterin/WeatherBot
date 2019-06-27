@@ -8,7 +8,7 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text)
     {
-        
+     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);   
 }else{
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
 }
