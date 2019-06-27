@@ -8,14 +8,8 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text)
     {
-	 if ($text == '/start') {
-            if (strlen($name) == 0) {
-                $reply = 'Добро пожаловать, Незнакомец!';
-            }
-            else {
-                $reply = 'Добро пожаловать, '.$name.'!';
-            }
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
+	 
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Hello" ]);
        
 }else{
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
