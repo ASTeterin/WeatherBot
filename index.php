@@ -9,7 +9,7 @@
     if($text)
     {
 	 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Hello" ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $name ]);
        
 }else{
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
