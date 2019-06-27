@@ -7,7 +7,10 @@
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Сократить ссылку"],["Расшифровать ссылку"]]; //Клавиатура
-    if($text)
+echo $result;
+var_dump($result);
+    
+if($text)
     {
         if ($text == "/start")
         {
