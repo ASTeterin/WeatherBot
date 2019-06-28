@@ -8,35 +8,22 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/sayhello"],["/help"]]; //Клавиатура
     
-   /* if($text){
-        if ($text == "/sayhello") {
-            $response = "Hello, ";
-                if (!empty($name)) {
-                    $response = $name;
-                } else {
-                    $response = "noname";
-                }
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
-        }
-            
-    }else{
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "send." ]);
-    }*/
-    
-    if($text){
-        if ($text == "/start") {
-            $reply = "Welcome";
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-
-        }elseif ($text == "/sayhello") {
-
-
-            $reply = "Hello, " . $name;
+   if($text){
+    if ($text == "/start") {
+        $reply = "Добро пожаловать в бота!";
+        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    }elseif ($text == "/help") {
+        $reply = "Информация с помощью.";
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-        }
+    }elseif ($text == "/sayhello") {
+        $reply = "Привет, " . $name;
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
     }else{
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Enter message" ]);
+        $reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
     }
+}else{
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
+}
 ?>
-   
