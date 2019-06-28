@@ -12,7 +12,6 @@
     $keyboard = [["/sayhello"],["/start"]]; 
     if($text){
         if ($text == "/start") {
-            
             $reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
@@ -25,7 +24,7 @@
             }
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }else{
-            $reply = "неизвестная комманда .$text ";
+            $reply = "неизвестная комманда " .$text ;
 	    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }
