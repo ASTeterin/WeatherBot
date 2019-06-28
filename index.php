@@ -10,20 +10,17 @@
     
    if($text){
     if ($text == "/start") {
-        $reply = "Добро пожаловать в бота!";
+        $reply = "Welcome";
         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }elseif ($text == "/help") {
-        $reply = "Информация с помощью.";
+        $reply = "Info";
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
     }elseif ($text == "/sayhello") {
-        $reply = "Привет, " . $name;
+        $reply = $name;
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-    }else{
-        $reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
     }
 }else{
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Send" ]);
 }
 ?>
