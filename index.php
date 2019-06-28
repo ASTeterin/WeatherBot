@@ -9,6 +9,9 @@
     if ($text)
     {
         switch ($text) {
+            case '/start': 
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Добро пожаловать"]);
+                break;
             case '/sayhello': {
                 $response = 'Привет, ';
                 if (!empty($name)) {
@@ -19,9 +22,7 @@
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
             }
             break;
-            case "/start": 
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Добро пожаловать"]);
-                break;
+            
         }
       
     }else {
