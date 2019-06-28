@@ -6,7 +6,7 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    //$keyboard = [["/sayhello"],["/help"]]; //Клавиатура
+    $keyboard = [["/sayhello"],["/help"]]; //Клавиатура
     
    /* if($text){
         if ($text == "/sayhello") {
