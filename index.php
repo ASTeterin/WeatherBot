@@ -7,12 +7,12 @@
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text == "/sayhello") {
-        //$response = "Привет";
-        /*if ($name == "Саша") {
+        $response = "Привет";
+        if (isset($name)) {
             $response = $response . $name;
-        }*/
+        }
 	 
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $name ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
        
     }else {
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
