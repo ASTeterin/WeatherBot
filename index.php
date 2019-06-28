@@ -5,14 +5,14 @@
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
-    $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+    //$name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text == "/sayhello") {
         //$response = "Привет";
         /*if ($name == "Саша") {
             $response = $response . $name;
         }*/
 	 
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $text ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $chat_id ]);
        
     }else {
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
