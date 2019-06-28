@@ -12,9 +12,9 @@
         if ($text == "/sayhello") {
             $response = 'Hello, ';
                 if (!empty($name)) {
-                    $response .= $name;
+                    $response = $name;
                 } else {
-                    $response .= 'noname';
+                    $response = "noname";
                 }
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
         }
