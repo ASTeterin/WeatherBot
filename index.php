@@ -8,7 +8,7 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text == "/sayhello") {
         $response = "Привет, ";
-        if (empty($name)) {
+        if (!empty($name)) {
             $response .= $name;
         } else {
             $response .= "незнакомец";
