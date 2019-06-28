@@ -8,12 +8,14 @@
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     
-    function getDataFromApi($url)
+    function getDataFromApi($url): ?string
     {
         $ch = curl_init();
         // установка URL и других необходимых параметров
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
         // загрузка страницы и выдача её браузеру
         $data = curl_exec($ch);
         // завершение сеанса и освобождение ресурсов
@@ -44,4 +46,3 @@
 	    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }
-?>
