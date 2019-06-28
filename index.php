@@ -11,14 +11,14 @@
     {
         switch ($text) {
             case '/start': 
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Äîáğî ïîæàëîâàòü â áîò"]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "„®¡à® ¯®¦ «®¢ âì"]);
                 break;
             case '/sayhello': {
-                $response = 'Ïğèâåò, ';
+                $response = 'à¨¢¥â, ';
                 if (!empty($name)) {
                     $response .= $name;
                 } else {
-                    $response .= 'Íåçíàêîìåö';
+                    $response .= '­¥§­ ª®¬¥æ';
                 }
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
             }
