@@ -8,10 +8,9 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text == "/sayhello") {
         $response = "Привет ";
-        if (isset($name)) {
+        if (empty($name)) {
             $response = $name;
         }
-	 
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
        
     }else {
