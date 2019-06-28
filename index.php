@@ -39,7 +39,7 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }else{
             //$reply = "неизвестная комманда " .$text ;
-            $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=%D0%92%D0%BE%D0%BB%D0%B6%D1%81%D0%BA&days=1&lang=ru";
+            $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . $text . "&days=1&lang=ru";
 //
             $reply = getDataFromApi($url);
             
