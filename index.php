@@ -6,7 +6,7 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    if ($text)
+    /*if ($text)
     {
         switch ($text) {
             case '/start': 
@@ -27,4 +27,24 @@
       
     }else {
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
+    }*/
+    
+    $keyboard = [["/sayhello"],["/help"]]; //Клавиатура
+if($text){
+    if ($text == "/start") {
+        $reply = "Добро пожаловать в бота!";
+        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    }elseif ($text == "/help") {
+        $reply = "Информация с помощью.";
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+    }elseif ($text == "/sayhello") {
+        $reply = "Привет, " . $name;
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+    }else{
+        $reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
     }
+}else{
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
+}
