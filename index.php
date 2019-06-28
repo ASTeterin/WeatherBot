@@ -1,23 +1,24 @@
 <?php
-    include('vendor/autoload.php'); //Подключаем библиотеку
+    include('vendor/autoload.php'); //Џ®¤Є«оз Ґ¬ ЎЁЎ«Ё®вҐЄг
     use Telegram\Bot\Api;
-    $telegram = new Api('832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE'); //Устанавливаем токен, полученный у BotFather
-    $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
-    $text = $result["message"]["text"]; //Текст сообщения
-    $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
-    $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    /*if ($text)
+    $telegram = new Api('832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE'); //“бв ­ ў«Ёў Ґ¬ в®ЄҐ­, Ї®«гзҐ­­л© г BotFather
+    $result = $telegram -> getWebhookUpdates(); //ЏҐаҐ¤ Ґ¬ ў ЇҐаҐ¬Ґ­­го $result Ї®«­го Ё­д®а¬ жЁо ® б®®ЎйҐ­ЁЁ Ї®«м§®ў вҐ«п
+    $text = $result["message"]["text"]; //’ҐЄбв б®®ЎйҐ­Ёп
+    $chat_id = $result["message"]["chat"]["id"]; //“­ЁЄ «м­л© Ё¤Ґ­вЁдЁЄ в®а Ї®«м§®ў вҐ«п
+    $name = $result["message"]["from"]["username"]; //ћ§Ґа­Ґ©¬ Ї®«м§®ў вҐ«п
+    $keyboard = [["/sayhello"],["/help"]]; //Љ« ўЁ вга 
+    if ($text)
     {
         switch ($text) {
             case '/start': 
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Добро пожаловать"]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Добро пожаловать в бот"]);
                 break;
             case '/sayhello': {
                 $response = 'Привет, ';
                 if (!empty($name)) {
-                    $response = $name;
+                    $response .= $name;
                 } else {
-                    //$response .= 'незнакомец';
+                    $response .= 'Незнакомец';
                 }
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
             }
@@ -26,25 +27,7 @@
         }
       
     }else {
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
-    }*/
-    
-    $keyboard = [["/sayhello"],["/help"]]; //Клавиатура
-if($text){
-    if ($text == "/start") {
-        $reply = "Hello!";
-        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-    }elseif ($text == "/help") {
-        $reply = "Info.";
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-    }elseif ($text == "/sayhello") {
-        $reply = "Hello, " . $name;
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-    }else{
-        $reply = "По запросу \"<b>".$text."</b>\" ничего не найдено.";
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode'=> 'HTML', 'text' => $reply ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "ЋвЇа ўмвҐ вҐЄбв®ў®Ґ б®®ЎйҐ­ЁҐ." ]);
     }
-}else{
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
-}
+    
+    
