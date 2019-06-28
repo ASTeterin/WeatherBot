@@ -7,25 +7,21 @@
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/sayhello"],["/help"]]; //Клавиатура
-    if ($text)
-    {
-        switch ($text) {
-            case '/start': 
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Welcome"]);
-                break;
-            case '/sayhello': 
-                $response = 'Hello, ';
+    
+    if($text){
+        if ($text == "/sayhello") {
+            $response = 'Hello, ';
                 if (!empty($name)) {
                     $response .= $name;
                 } else {
                     $response .= 'noname';
                 }
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
-            
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
         }
-      
-    }else {
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Enter a message." ]);
+            
+    }else{
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "send." ]);
     }
     
     
+   
