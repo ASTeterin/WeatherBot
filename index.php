@@ -1,24 +1,24 @@
 <?php
-    include('vendor/autoload.php'); //èÆ§™´ÓÁ†•¨ °®°´®Æ‚•™„
+    include('vendor/autoload.php'); //–ü–æ–¥–∫–ª—é—á–∞–µ–º –±–∏–±–ª–∏–æ—Ç–µ–∫—É
     use Telegram\Bot\Api;
-    $telegram = new Api('832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE'); //ì·‚†≠†¢´®¢†•¨ ‚Æ™•≠, ØÆ´„Á•≠≠Î© „ BotFather
-    $result = $telegram -> getWebhookUpdates(); //è•‡•§†•¨ ¢ Ø•‡•¨•≠≠„Ó $result ØÆ´≠„Ó ®≠‰Æ‡¨†Ê®Ó Æ ·ÆÆ°È•≠®® ØÆ´ÏßÆ¢†‚•´Ô
-    $text = $result["message"]["text"]; //í•™·‚ ·ÆÆ°È•≠®Ô
-    $chat_id = $result["message"]["chat"]["id"]; //ì≠®™†´Ï≠Î© ®§•≠‚®‰®™†‚Æ‡ ØÆ´ÏßÆ¢†‚•´Ô
-    $name = $result["message"]["from"]["username"]; //ûß•‡≠•©¨ ØÆ´ÏßÆ¢†‚•´Ô
-    $keyboard = [["/sayhello"],["/help"]]; //ä´†¢®†‚„‡†
+    $telegram = new Api('832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE'); //–£—Å—Ç–∞–Ω–∞–≤–ª–∏–≤–∞–µ–º —Ç–æ–∫–µ–Ω, –ø–æ–ª—É—á–µ–Ω–Ω—ã–π —É BotFather
+    $result = $telegram -> getWebhookUpdates(); //–ü–µ—Ä–µ–¥–∞–µ–º –≤ –ø–µ—Ä–µ–º–µ–Ω–Ω—É—é $result –ø–æ–ª–Ω—É—é –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é –æ —Å–æ–æ–±—â–µ–Ω–∏–∏ –ø–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—è
+    $text = $result["message"]["text"]; //–¢–µ–∫—Å—Ç —Å–æ–æ–±—â–µ–Ω–∏—è
+    $chat_id = $result["message"]["chat"]["id"]; //–£–Ω–∏–∫–∞–ª—å–Ω—ã–π –∏–¥–µ–Ω—Ç–∏—Ñ–∏–∫–∞—Ç–æ—Ä –ø–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—è
+    $name = $result["message"]["from"]["username"]; //–Æ–∑–µ—Ä–Ω–µ–π–º –ø–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—è
+    $keyboard = [["/sayhello"],["/help"]]; //–ö–ª–∞–≤–∏–∞—Ç—É—Ä–∞
     if ($text)
     {
         switch ($text) {
             case '/start': 
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "ÑÆ°‡Æ ØÆ¶†´Æ¢†‚Ï"]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "–î–æ–±—Ä–æ –ø–æ–∂–∞–ª–æ–≤–∞—Ç—å"]);
                 break;
             case '/sayhello': {
-                $response = 'è‡®¢•‚, ';
+                $response = '–ü—Ä–∏–≤–µ—Ç, ';
                 if (!empty($name)) {
                     $response .= $name;
                 } else {
-                    $response .= '≠•ß≠†™Æ¨•Ê';
+                    $response .= '–Ω–µ–∑–Ω–∞–∫–æ–º–µ—Ü';
                 }
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
             }
@@ -27,7 +27,7 @@
         }
       
     }else {
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "é‚Ø‡†¢Ï‚• ‚•™·‚Æ¢Æ• ·ÆÆ°È•≠®•." ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "–û—Ç–ø—Ä–∞–≤—å—Ç–µ —Ç–µ–∫—Å—Ç–æ–≤–æ–µ —Å–æ–æ–±—â–µ–Ω–∏–µ." ]);
     }
     
     
