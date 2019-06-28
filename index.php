@@ -9,7 +9,7 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
 
 
-    $keyboard = [["/sayhello"],["/help"]]; 
+    $keyboard = [["/sayhello"],["/start"]]; 
     if($text){
         if ($text == "/start") {
             
