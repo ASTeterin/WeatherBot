@@ -32,13 +32,8 @@
         }elseif ($text == "/sayhello") {
 
 
-            $reply = "Hello, ";
-            if (!empty($name)) {
-                $reply = $name;
-            } else {
-                $response = "noname";
-            }
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $reply = "Hello, " . $name;
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }else{
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Enter message" ]);
