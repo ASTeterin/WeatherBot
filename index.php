@@ -18,7 +18,7 @@
         $data = curl_exec($ch);
         // завершение сеанса и освобождение ресурсов
         curl_close($ch);
-        return $data["location"]["name"];
+        return $data;
     }
 
     $keyboard = [["/sayhello"],["/start"]]; 
