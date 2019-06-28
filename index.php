@@ -8,7 +8,7 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     //$keyboard = [["/sayhello"],["/help"]]; //Клавиатура
     
-    if($text){
+   /* if($text){
         if ($text == "/sayhello") {
             $response = "Hello, ";
                 if (!empty($name)) {
@@ -21,7 +21,7 @@
             
     }else{
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "send." ]);
-    }
+    }*/
     
     if($text){
         if ($text == "/start") {
