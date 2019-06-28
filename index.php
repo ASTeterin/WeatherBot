@@ -12,8 +12,8 @@
             $response = $response . $name;
         }*/
 	 
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $result["message"] ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "hello" ]);
        
-}else{
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
-}
+    }else {
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
+    }
