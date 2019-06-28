@@ -14,7 +14,7 @@
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Welcome"]);
                 break;
             case '/sayhello': {
-                $response = 'Hello‚, ';
+                $response = 'Hello, ';
                 if (!empty($name)) {
                     $response .= $name;
                 } else {
