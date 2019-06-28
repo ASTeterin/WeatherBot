@@ -9,23 +9,24 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
 
 
-    $keyboard = [["/sayhello"],["/help"]]; //??????????
+    $keyboard = [["/sayhello"],["/help"]]; 
     if($text){
         if ($text == "/start") {
             
-            $reply = "Hello!";
+            $reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }elseif ($text == "/sayhello") {
-            $reply = "Hello, ";
+            $reply = "Здравствуйте, ";
             if (empty($name)) {
-                $reply .= "noname";
+                $reply .= "незнакомец";
             } else {
                 $reply .= $name;
             }
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }else{
-            $reply = "?? ??????? \"<b>".$text."</b>\" ?????? ?? ???????.";
+            $reply = "неизвестная комманда .$text ";
+	    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }
 ?>
