@@ -23,5 +23,25 @@
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "send." ]);
     }
     
-    
+    if($text){
+        if ($text == "/start") {
+            $reply = "Welcome";
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+
+        }elseif ($text == "/sayhello") {
+
+
+            $reply = "Hello, ";
+            if (!empty($name)) {
+                $reply = $name;
+            } else {
+                $response = "noname";
+            }
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+        }
+    }else{
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Enter message" ]);
+    }
+?>
    
