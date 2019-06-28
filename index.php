@@ -11,14 +11,14 @@
     {
         switch ($text) {
             case '/start': 
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Добро пожаловать"]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Welcome"]);
                 break;
             case '/sayhello': {
-                $response = 'Привет, ';
+                $response = 'Hello�, ';
                 if (!empty($name)) {
                     $response .= $name;
                 } else {
-                    $response .= 'незнакомец';
+                    $response .= 'noname';
                 }
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
             }
@@ -27,7 +27,7 @@
         }
       
     }else {
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Enter a message." ]);
     }
     
     
