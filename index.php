@@ -13,7 +13,7 @@
             case '/start': 
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  "Welcome"]);
                 break;
-            case '/sayhello': {
+            case '/sayhello': 
                 $response = 'Hello, ';
                 if (!empty($name)) {
                     $response .= $name;
@@ -21,8 +21,6 @@
                     $response .= 'noname';
                 }
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  $response]);
-            }
-            break;
             
         }
       
