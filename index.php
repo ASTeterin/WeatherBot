@@ -1,5 +1,5 @@
 <?php
-    require_once("inc\common.inc.php");
+    //require_once("inc\common.inc.php");
 
     include('vendor/autoload.php'); //Подключаем библиотеку
     use Telegram\Bot\Api;
@@ -47,9 +47,9 @@
 	$forecast = explode("\"date\":\"", $str);
 //print_r($forecast);
 
-	$weather = parseForecast($forecast));
+	/*$weather = parseForecast($forecast));
 	//$reply = "";
-	foreach ($weather as $dailyWeather) {
+	foreach ($weather as $dailyWeather) {*/
 		$reaply = ""; 
 		$reply .= "Минимальная температура "; //. $daylyWeather['min_temp'];
 		$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
