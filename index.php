@@ -49,8 +49,8 @@
         $reply = "123";
 //print_r($forecast);
 
-	/*$weather = parseForecast($forecast));
-	$reply = "";
+	$weather = parseForecast($forecast);
+	/*$reply = "";
 	foreach ($weather as $dailyWeather) {
 		$reaply = ""; 
 		$reply .= "Минимальная температура "; //. $daylyWeather['min_temp'];*/
