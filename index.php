@@ -45,7 +45,7 @@
             $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . $text . "&days=1&lang=ru";
 //
             $str = getDataFromApi($url);
-	$forecast = explode("\"date\":\"", $str);
+	//$forecast = explode("\"date\":\"", $str);
         $reply = "123";
 //print_r($forecast);
 
