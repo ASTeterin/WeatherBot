@@ -46,17 +46,17 @@
 //
             $str = getDataFromApi($url);
 	$forecast = explode("\"date\":\"", $str);
-        $reply = "123";
+  
 //print_r($forecast);
 
 	$weather = parseForecast($forecast);
-	/*$reply = "";
+	$reply = "";
 	foreach ($weather as $dailyWeather) {
 		$reaply = ""; 
 		$reply .= "Минимальная температура "; //. $daylyWeather['min_temp'];*/
 		$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 		
-	//
+        }
     
         }
     }
