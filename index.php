@@ -44,18 +44,18 @@
             //$reply = "неизвестная комманда " .$text ;
             $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . $text . "&days=1&lang=ru";
 //
-            $reply = getDataFromApi($url);
-	//$forecast = explode("\"date\":\"", $str);
+            $str = getDataFromApi($url);
+	$forecast = explode("\"date\":\"", $str);
 //print_r($forecast);
 
-	/*$weather = parseForecast($forecast));
-	//$reply = "";
-	foreach ($weather as $dailyWeather) {*/
-		//$reaply = ""; 
-		//$reply .= "Минимальная температура "; //. $daylyWeather['min_temp'];
+	$weather = parseForecast($forecast));
+	$reply = "";
+	foreach ($weather as $dailyWeather) {
+		$reaply = ""; 
+		$reply .= "Минимальная температура "; //. $daylyWeather['min_temp'];
 		$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 		
-	//}
+	//
     
         }
     }
