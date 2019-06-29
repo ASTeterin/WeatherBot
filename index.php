@@ -54,7 +54,7 @@
 		//$reply .= "Минимальная температура "; //. $daylyWeather['min_temp'];
 		$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 		
-	}
+	//}
     
         }
     }
