@@ -42,7 +42,7 @@
                 $weather = parseForecast($forecast);
                 for ($i = 1; $i < count($weather); $i++) {
                     $reaply = ""; 
-                    $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['min_temp'] . " максимальная температура " . $weather[$i]['max_temp'];
+                    $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". Минимальная температура " . $weather[$i]['min_temp'] . ", максимальная температура " . $weather[$i]['max_temp'];
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
             }else{
