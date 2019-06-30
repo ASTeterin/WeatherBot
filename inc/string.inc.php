@@ -5,6 +5,21 @@ function getSubstBeforeBlank($str)
     return mb_ereg_replace('^([^\s]*).*$', '\\1', trim($str));
 }
 
+
+
+function removeExtraSymbols($str, $symbol)
+{
+    $words = [];
+    $tempStr = '';
+    $words = explode($symbol , $str);
+    foreach ($words as $word) {
+        if ($word != '') {
+            $tempStr .= $word . $symbol;
+        }
+    }
+    return rtrim($tempStr, $symbol);
+}
+
 function parseForecast($forecast)
 {
     $data = array();
