@@ -17,11 +17,11 @@
             $reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-       /* }elseif ($text == "/help") {
-            $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах " .
-                "Список комманд: " . "<населенный пункт> <количество дней> - предоставляет прогноз погоды в <населенный пункт> на <количество дней>. " .
-                "Если количество дней не указано - будет выдан прогноз на текущий день"; 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);*/
+        }elseif ($text == "/help") {
+            $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах " ;
+                /*"Список комманд: " . "<населенный пункт> <количество дней> - предоставляет прогноз погоды в <населенный пункт> на <количество дней>. " .
+                "Если количество дней не указано - будет выдан прогноз на текущий день"; */
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }elseif ($text == "/sayhello") {
             $reply = "Здравствуйте, ";
             if (empty($name)) {
@@ -42,13 +42,13 @@
                 $weather = parseForecast($forecast);
                 for ($i = 1; $i < count($weather); $i++) {
                     $reaply = ""; 
-                    $reply = "<b>" . $weather[$i]['date'] . "</b><br>" . $weather[$i]['rain'] . "<br>минимальная температура " . $weather[$i]['min_temp'] . "<br>максимальная температура " . $weather[$i]['max_temp'];
-                    $telegram->sendMessage([ 'chat_id' => $chat_id,  'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
+                    $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['min_temp'] . " максимальная температура " . $weather[$i]['max_temp'];
+                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
             }else{
                 $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
             }
         }
-    
+    }
  
