@@ -49,8 +49,9 @@
             for ($i = 1; $i < count($weather); $i++) {
                 $reaply = ""; 
                 //$reply = $dailyWeather['rain'] . " минимальная температура " . $dailyWeather['max_temp'] . " Максимальная температура" . $dailyWeather['max_temp'];
-                $reply = $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['min_temp'] . " Максимальная температура" . $weather[$i]['max_temp'];
+                $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['min_temp'] . " максимальная температура" . $weather[$i]['max_temp'];
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }
     }
+    
