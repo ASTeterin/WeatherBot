@@ -11,14 +11,16 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     
 
-    $keyboard = [["/sayhello"],["/start"]]; 
+    $keyboard = [["/help"],["/start"]]; 
     if($text){
         if ($text == "/start") {
             $reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }elseif ($text == "/help") {
-            
+            $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах.<br>" .
+                "Список комманд:" . "<населенный пункт> <количество дней> - предоставляет прогноз погоды в <населенный пункт> на <количество дней>. " .
+                "Если количество дней не указано - будет выдан прогноз на текущий день";
         }    
         }elseif ($text == "/sayhello") {
             $reply = "Здравствуйте, ";
