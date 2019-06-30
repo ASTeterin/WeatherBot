@@ -52,9 +52,9 @@
 	$weather = parseForecast($forecast);
 	$reply = "";
 	foreach ($weather as $dailyWeather) {
-		$reaply = ""; 
-		$reply .= "Минимальная температура " . $dailyWeather['max_temp'];
-		$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $reaply = ""; 
+            $reply = $dailyWeather['rain'] . " минимальная температура " . $dailyWeather['max_temp'] . " Максимальная температура" . $dailyWeather['max_temp'];
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 		
         }
     
