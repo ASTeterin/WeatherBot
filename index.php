@@ -10,20 +10,6 @@
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     
-    function getDataFromApi($url): ?string
-    {
-        $ch = curl_init();
-        // установка URL и других необходимых параметров
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        // загрузка страницы и выдача её браузеру
-        $data = curl_exec($ch);
-        // завершение сеанса и освобождение ресурсов
-        curl_close($ch);
-        return $data;
-    }
 
     $keyboard = [["/sayhello"],["/start"]]; 
     if($text){
@@ -50,8 +36,7 @@
             $weather = parseForecast($forecast);
             for ($i = 1; $i < count($weather); $i++) {
                 $reaply = ""; 
-                //$reply = $dailyWeather['rain'] . " минимальная температура " . $dailyWeather['max_temp'] . " Максимальная температура" . $dailyWeather['max_temp'];
-                $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['min_temp'] . " максимальная температура" . $weather[$i]['max_temp'];
+                $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['min_temp'] . " максимальная температура " . $weather[$i]['max_temp'];
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }
