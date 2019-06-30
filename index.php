@@ -41,7 +41,7 @@
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
             }else{
-                $reply = "Город " . $city . " не найден";
+                $reply = "Населенный пункт <b>" . $city . "</b> не найден";
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
         }
