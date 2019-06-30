@@ -18,7 +18,7 @@ foreach($forecast as $daylyForecast) {
 	$rainPos = strpos($daylyForecast, "{\"text\":\"", $minTempPosEnd) + 9;
 	$rainPosEnd = strpos($daylyForecast, ",", $rainPos); 
 	$rain = substr($daylyForecast, $rainPos, $rainPosEnd - $rainPos - 1); 
-	$array = ['max_temp' => $maxTemp, 'min_temp' => $minTemp, 'rain' => rain];
+	$array = ['max_temp' => $maxTemp, 'min_temp' => $minTemp, 'rain' => $rain];
 	//echo $maxTemp . " " . $minTemp . " " . $rain;
 	$data[] = $array;
 	//var_dump($array);
