@@ -40,17 +40,17 @@
             }
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }else{
-            $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . $text . "&days=1&lang=ru";
+            $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . $text . "&days=5&lang=ru";
             $str = getDataFromApi($url);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $text ]);
             $forecast = explode("\"date\":\"", $str);
  
             $weather = parseForecast($forecast);
             for ($i = 1; $i < count($weather); $i++) {
                 $reaply = ""; 
                 //$reply = $dailyWeather['rain'] . " минимальная температура " . $dailyWeather['max_temp'] . " Максимальная температура" . $dailyWeather['max_temp'];
-                $reply = $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['max_temp'] . " Максимальная температура" . $weather[$i]['max_temp'];
+                $reply = $weather[$i]['rain'] . " минимальная температура " . $weather[$i]['min_temp'] . " Максимальная температура" . $weather[$i]['max_temp'];
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }
-    
         }
     }
