@@ -31,7 +31,7 @@
             $str = getDataFromApi($url);
             if (!strpos($str, "error"))
             {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $city ]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
                 $forecast = explode("\"date\":\"", $str);
 
                 $weather = parseForecast($forecast);
@@ -42,7 +42,7 @@
                 }
             }else{
                 $reply = "Населенный пункт" . '<b>' . $city . '</b>' . " не найден";
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
             }
         }
     }
