@@ -27,7 +27,7 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }else{
             list($city, $days) = explode(" ", removeExtraSymbols($text, " ")) ;
-            $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . $city . "&days=" . $days . "&lang=ru";
+            $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . urlencode($city) . "&days=" . $days . "&lang=ru";
             $str = getDataFromApi($url);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $city ]);
             $forecast = explode("\"date\":\"", $str);
