@@ -24,8 +24,8 @@ function startBot($telegram, $chat_id, $keyboard, $name)
 
 function helpBot($telegram, $chat_id)
 {
-    $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах. "
-                . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз " ;
+    $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах.\n"
+       . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз " ;
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 }
 
@@ -42,7 +42,7 @@ function showForecast($telegram, $chat_id, $text)
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
             //$reaply = ""; 
-            $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". Минимальная температура " . $weather[$i]['min_temp'] . ", максимальная температура " . $weather[$i]['max_temp'];
+            $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . ",\nмаксимальная температура " . $weather[$i]['max_temp'];
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }else{
