@@ -16,6 +16,13 @@ function startBot($telegram, $chat_id, $keyboard)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
+function helpBot($telegram, $chat_id)
+{
+    $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах. "
+                . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз " ;
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+}
+
 function botWorking($telegram, $chat_id, $text, $name, $keyboard)
 {
     if($text){
@@ -25,9 +32,10 @@ function botWorking($telegram, $chat_id, $text, $name, $keyboard)
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);*/
         }elseif ($text == "/help") {
-            $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах. "
+            /*$reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах. "
                     . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз " ;
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);*/
+            helpBot($telegram, $chat_id);
         }elseif ($text == "/sayhello") {
             $reply = "Здравствуйте, ";
             if (empty($name)) {
