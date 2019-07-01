@@ -32,7 +32,7 @@ function helpBot($telegram, $chat_id)
 function showForecast($telegram, $chat_id, $text)
 {
     list($city, $days) = explode(" ", removeExtraSymbols($text, " ")) ;
-    $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . urlencode($city) . "&days=" . $days . "&lang=ru";
+    $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
     $str = getDataFromApi($url);
     if (!strpos($str, "error"))
     {
@@ -60,24 +60,6 @@ function botWorking($telegram, $chat_id, $text, $name, $keyboard)
             helpBot($telegram, $chat_id);
         }else{
             showForecast($telegram, $chat_id, $text);
-            /*list($city, $days) = explode(" ", removeExtraSymbols($text, " ")) ;
-            $url = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=" . urlencode($city) . "&days=" . $days . "&lang=ru";
-            $str = getDataFromApi($url);
-            if (!strpos($str, "error"))
-            {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
-                $forecast = explode("\"date\":\"", $str);
-
-                $weather = parseForecast($forecast);
-                for ($i = 1; $i < count($weather); $i++) {
-                    //$reaply = ""; 
-                    $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". Минимальная температура " . $weather[$i]['min_temp'] . ", максимальная температура " . $weather[$i]['max_temp'];
-                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-                }
-            }else{
-                $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
-            }*/
         }
     }    
 }
