@@ -51,8 +51,13 @@ function showForecast($telegram, $chat_id, $text)
     }  
 }
 
-function botWorking($telegram, $chat_id, $text, $name, $keyboard)
+function botWorking($telegram, $result)
 {
+    $text = $result["message"]["text"]; //Текст сообщения
+    $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
+    $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+    $keyboard = [["/help"],["/start"]];
+    
     if($text){
         if ($text == "/start") {
             startBot($telegram, $chat_id, $keyboard, $name);
