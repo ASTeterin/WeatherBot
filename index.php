@@ -15,14 +15,16 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/help"],["/start"]]; 
     
-    botWorking($telegram, $chat_id, $text, $name, $keyboard);
+    //botWorking($telegram, $chat_id, $text, $name, $keyboard);
 
     
-    /*if($text){
+    if($text){
         if ($text == "/start") {
-            $reply = "Погода в городах мира!";
+            /*$reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);*/
+            
+            startBot($telegram, $chat_id, $keyboard);
         }elseif ($text == "/help") {
             $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах. "
                     . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз " ;
@@ -55,5 +57,5 @@
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
             }
         }
-    }*/
+    }
  
