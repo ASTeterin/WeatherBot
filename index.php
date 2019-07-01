@@ -18,9 +18,8 @@
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }elseif ($text == "/help") {
-            $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах " ;
-                /*"Список комманд: " . "<населенный пункт> <количество дней> - предоставляет прогноз погоды в <населенный пункт> на <количество дней>. " .
-                "Если количество дней не указано - будет выдан прогноз на текущий день"; */
+            $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах. "
+                    . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз " ;
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }elseif ($text == "/sayhello") {
             $reply = "Здравствуйте, ";
@@ -42,7 +41,7 @@
                 $weather = parseForecast($forecast);
                 for ($i = 1; $i < count($weather); $i++) {
                     $reaply = ""; 
-                    $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". <br> Минимальная температура " . $weather[$i]['min_temp'] . ", <br> максимальная температура " . $weather[$i]['max_temp'];
+                    $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". Минимальная температура " . $weather[$i]['min_temp'] . ", максимальная температура " . $weather[$i]['max_temp'];
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
             }else{
