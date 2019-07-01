@@ -3,18 +3,19 @@
     include('vendor/autoload.php'); //Подключаем библиотеку
     require_once('inc/common.inc.php');
     use Telegram\Bot\Api;
-    /*$telegram = new Api('832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE'); //Устанавливаем токен, полученный у BotFather
-    $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
-    */
     
-    $result = initBot(API_TOKEN);
+    $telegram = new Api('API_TOKEN'); //Устанавливаем токен, полученный у BotFather
+    $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
+    
+    
+    //$result = initBot(API_TOKEN);
     
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/help"],["/start"]]; 
     
-    botWorking($chat_id, $text, $name);
+    botWorking($telegram, $chat_id, $text, $name, $keyboard);
 
     
     /*if($text){

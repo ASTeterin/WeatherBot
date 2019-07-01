@@ -9,20 +9,21 @@ function initBot($token)
     return $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
 }
 
-function startBot($chat_id)
+function startBot($telegram, $chat_id, $keyboard)
 {
     $reply = "Погода в городах мира!";
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
-function botWorking($chat_id, $text, $name)
+function botWorking($telegram, $chat_id, $text, $name, $keyboard)
 {
     if($text){
         if ($text == "/start") {
-            $reply = "Погода в городах мира!";
+            startBot($telegram, $chat_id, $keyboard);
+            /*$reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);*/
         }elseif ($text == "/help") {
             $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах. "
                     . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз " ;
