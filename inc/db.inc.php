@@ -24,6 +24,14 @@ function addFavoriteCity($city, $chat_id)
     }
 }
 
+function getFavoriteCity($chat_id)
+{
+    global $db;
+    $db->where ("id_chat", $chat_id);
+    $user = $db->getOne ("session");
+    return $user['city']; 
+}
+
 function findUser($chat_id)
 {
     global $db;
@@ -47,5 +55,10 @@ function addNewUser($chat_id, $name)
 function createUser($chat_id, $name)
 {
     global $db;
-    addNewUser($db, $chat_id, $name);
+    addNewUser($chat_id, $name);
+}
+
+function addCity()
+{
+    
 }

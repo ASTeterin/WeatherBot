@@ -60,6 +60,12 @@ function addFavoriteCityHandler($telegram, $chat_id, $text)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
 }
 
+function initKeyboard(&$keyboard, $chat_id)
+{
+    $favoriteCity = getFavoriteCity($chat_id);
+    $keyboard[] = [$favoriteCity];
+}
+
 function botWorking($telegram, $result)
 {
     $text = $result["message"]["text"]; //Текст сообщения
