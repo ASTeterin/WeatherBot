@@ -43,7 +43,7 @@
                 for ($i = 1; $i < count($weather); $i++) {
                     $reaply = ""; 
                     $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". <br> Минимальная температура " . $weather[$i]['min_temp'] . ", <br> максимальная температура " . $weather[$i]['max_temp'];
-                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
+                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
             }else{
                 $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
