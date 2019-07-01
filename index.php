@@ -18,14 +18,14 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/help"],["/start"]]; 
     
-    //botWorking($telegram, $chat_id, $text, $name, $keyboard);
+    botWorking($telegram, $chat_id, $text, $name, $keyboard);
 
     
-    if($text){
+    /*if($text){
         if ($text == "/start") {
             /*$reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);*/
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
             
             startBot($telegram, $chat_id, $keyboard);
         }elseif ($text == "/help") {
