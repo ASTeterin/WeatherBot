@@ -9,9 +9,15 @@ function initBot($token)
     return $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
 }
 
-function startBot($telegram, $chat_id, $keyboard)
+function startBot($telegram, $chat_id, $keyboard, $name)
 {
-    $reply = "Погода в городах мира!";
+    $reply = "Здравствуйте, ";
+        if (empty($name)) {
+            $reply .= "незнакомец";
+        } else {
+            $reply .= $name;
+        }
+    //$reply = "Погода в городах мира!";
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
@@ -27,7 +33,7 @@ function botWorking($telegram, $chat_id, $text, $name, $keyboard)
 {
     if($text){
         if ($text == "/start") {
-            startBot($telegram, $chat_id, $keyboard);
+            startBot($telegram, $chat_id, $keyboard, $name);
             /*$reply = "Погода в городах мира!";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);*/
