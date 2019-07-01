@@ -17,7 +17,7 @@ function startBot($telegram, $chat_id, $keyboard, $name)
         } else {
             $reply .= $name;
         }
-    //$reply = "Погода в городах мира!";
+    $reply .= "\nВы находитсь в в боте Погода в городах мира!";
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
@@ -41,8 +41,7 @@ function showForecast($telegram, $chat_id, $text)
 
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
-            //$reaply = ""; 
-            $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . ",\nмаксимальная температура " . $weather[$i]['max_temp'];
+            $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }else{
