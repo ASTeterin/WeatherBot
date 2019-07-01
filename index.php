@@ -4,7 +4,7 @@
     require_once('inc/common.inc.php');
     use Telegram\Bot\Api;
     
-    $telegram = new Api('832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE'); //Устанавливаем токен, полученный у BotFather
+    $telegram = new Api(API_TOKEN); //Устанавливаем токен, полученный у BotFather
 
     
     //$telegram = new Api('API_TOKEN'); //Устанавливаем токен, полученный у BotFather
