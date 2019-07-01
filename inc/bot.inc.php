@@ -74,6 +74,7 @@ function botWorking($telegram, $result)
     $keyboard = [["/help"],["/start"]];
     
     if($text){
+        initKeyboard($keyboard, $chat_id);
         if ($text == "/start") {
             startBot($telegram, $chat_id, $keyboard, $name);
         }elseif ($text == "/help") {
