@@ -22,6 +22,7 @@ function startBot($telegram, $chat_id, $keyboard, $name)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     
     //createUser($chat_id, $name);
+    addNewUser($chat_id, $name);
 }
 
 function helpBot($telegram, $chat_id)
