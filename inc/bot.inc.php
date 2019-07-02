@@ -52,21 +52,22 @@ function showForecast($telegram, $chat_id, $text)
     }  
 }
 
-function addFavoriteCityHandler($telegram, $chat_id, $text)
+function addFavoriteCityHandler($telegram, $chat_id, $text, $keyboard)
 {
     list($command, $city, $days) = explode(" ", removeExtraSymbols($text, " "));
     addFavoriteCity($city, $chat_id);
+    initKeyboard($keyboard, $chat_id);
+    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
-function initKeyboard($telegram, &$keyboard, $chat_id)
+function initKeyboard(&$keyboard, $chat_id)
 {
     $favoriteCity = getFavoriteCity($chat_id);
     $keyboard[] = [$favoriteCity];
-    $reply = "Клавиатура проинициализирована";
-    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    //$reply = "Клавиатура проинициализирована";
 }
 
 function botWorking($telegram, $result)
@@ -75,7 +76,7 @@ function botWorking($telegram, $result)
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/help"],["/start"]];
-    initKeyboard($telegram, $keyboard, $chat_id);
+    initKeyboard($keyboard, $chat_id);
     if($text){
         
         if ($text == "/start") {
@@ -83,7 +84,7 @@ function botWorking($telegram, $result)
         }elseif ($text == "/help") {
             helpBot($telegram, $chat_id);
         }elseif (getSubstBeforeBlank($text) == "/add") {
-            addFavoriteCityHandler($telegram, $chat_id, $text);
+            addFavoriteCityHandler($telegram, $chat_id, $text, $keyboard);
         }else{
             showForecast($telegram, $chat_id, $text);
         }
