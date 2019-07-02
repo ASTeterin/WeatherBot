@@ -52,7 +52,15 @@ function addNewUser($chat_id, $name)
 }
 
 
-function addCity()
+function addLastRequestedCity($city, $chat_id)
 {
-    
+    global $db;
+    $user_id = findUser($chat_id);
+    if(!is_null($user_id)) {
+        $data = [
+            "last_request" => $city,
+        ];
+        $db->where ("id_session", $user_id);
+        $db->update ('session', $data);
+    }
 }

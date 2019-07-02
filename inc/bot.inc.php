@@ -42,7 +42,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
     $response = getForecast();
     if (!strpos($response, "error"))
     {
-        
+        addLastRequestedCity($city, $chat_id);
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
         $forecast = explode("\"date\":\"", $response);
         
