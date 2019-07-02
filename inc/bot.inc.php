@@ -12,7 +12,7 @@ function initBot($token)
 
 function startComandHandler($telegram, $chat_id, $keyboard, $name)
 {
-    initKeyboard($keyboard, $chat_id);
+    //initKeyboard($keyboard, $chat_id);
     $reply = "Здравствуйте, ";
         if (empty($name)) {
             $reply .= "незнакомец";
@@ -71,7 +71,9 @@ function addFavoriteCityHandler($telegram, $chat_id, $text, $keyboard)
 function initKeyboard(&$keyboard, $chat_id)
 {
     $favoriteCity = getFavoriteCity($chat_id);
-    $keyboard[] = [$favoriteCity];
+    if (!is_null($favoriteCity)) {
+        $keyboard[] = [$favoriteCity];
+    }
     //$reply = "Клавиатура проинициализирована";
 }
 
