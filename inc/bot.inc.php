@@ -50,7 +50,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
         $forecast = explode("\"date\":\"", $response);
         
-        $keyboard[] = ["/add " . $displeyCityName];
+        $keyboard[] = ["/add " . $city];
         
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
