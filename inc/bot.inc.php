@@ -60,10 +60,12 @@ function addFavoriteCityHandler($telegram, $chat_id, $text)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
 }
 
-function initKeyboard(&$keyboard, $chat_id)
+function initKeyboard($telegram, &$keyboard, $chat_id)
 {
     $favoriteCity = getFavoriteCity($chat_id);
     $keyboard[] = [$favoriteCity];
+    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'reply_markup' => $reply_markup ]);
 }
 
 function botWorking($telegram, $result)
@@ -72,7 +74,7 @@ function botWorking($telegram, $result)
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/help"],["/start"]];
-    initKeyboard($keyboard, $chat_id);
+    initKeyboard($telegram, $keyboard, $chat_id);
     if($text){
         
         if ($text == "/start") {
