@@ -20,23 +20,6 @@ function removeExtraSymbols($str, $symbol)
     return rtrim($tempStr, $symbol);
 }
 
-function parseForecast($response)
-{
-    $data = array();
-    $city = $response['location']['name'];
-    $country = $response['location']['country'];
-    $data[] = ['city' => $city];
-    $data[] = ['country' => $country];
-    $forecast = array();
-    
-    foreach($response['forecast']['forecastday'] as $dayForecast) {
-        $forecast['date'] = $dayForecast;
-        $forecast['max_temp'] = $dayForecast['day']['maxtemp_c'];
-        $forecast['min_temp'] = $dayForecast['day']['mintemp_c'];
-        $forecast['condition'] = $dayForecast['day']['condition']['text'];
-    }
-}
-
 function parseForecast($forecast)
 {
     $data = array();
