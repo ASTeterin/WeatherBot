@@ -37,8 +37,9 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
 {
     list($city, $days) = explode(" ", removeExtraSymbols($text, " "));
     if (!is_numeric($days)) {
-        $city .= " ";
+        $city .= "%20";
         $city .= $days;
+        $days = 1;
     }
     global $url; 
     $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
