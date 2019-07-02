@@ -9,7 +9,7 @@ function initBot($token)
     return $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
 }
 
-function startBot($telegram, $chat_id, $keyboard, $name)
+function startComandHandler($telegram, $chat_id, $keyboard, $name)
 {
     $reply = "Здравствуйте, ";
         if (empty($name)) {
@@ -24,11 +24,11 @@ function startBot($telegram, $chat_id, $keyboard, $name)
     addNewUser($chat_id, $name);
 }
 
-function helpBot($telegram, $chat_id)
+function helpComandHandler($telegram, $chat_id)
 {
     $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах.\n"
-       . "Для вывода информации введите название населенного пункта и количество дней, на которые необходим прогноз.\n"
-       . "Для добавления города в избранные введите комманду /add название города";
+       . "Для вывода информации введите <название населенного пункта> и <количество дней>.\n"
+       . "Для добавления города в избранные введите комманду /add <название города>";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 }
 
@@ -71,7 +71,7 @@ function initKeyboard(&$keyboard, $chat_id)
     //$reply = "Клавиатура проинициализирована";
 }
 
-function botWorking($telegram, $result)
+function startBot($telegram, $result)
 {
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
@@ -81,9 +81,9 @@ function botWorking($telegram, $result)
     if($text){
         
         if ($text == "/start") {
-            startBot($telegram, $chat_id, $keyboard, $name);
+            startComandHandler($telegram, $chat_id, $keyboard, $name);
         }elseif ($text == "/help") {
-            helpBot($telegram, $chat_id);
+            helpComandHandler($telegram, $chat_id);
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityHandler($telegram, $chat_id, $text, $keyboard);
         }else{
