@@ -72,9 +72,9 @@ function botWorking($telegram, $result)
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/help"],["/start"]];
-    
+    initKeyboard($keyboard, $chat_id);
     if($text){
-        initKeyboard($keyboard, $chat_id);
+        
         if ($text == "/start") {
             startBot($telegram, $chat_id, $keyboard, $name);
         }elseif ($text == "/help") {
