@@ -36,7 +36,7 @@ function helpComandHandler($telegram, $chat_id)
 function showForecast($telegram, $chat_id, $text, &$keyboard)
 {
     list($city, $days) = explode(" ", removeExtraSymbols($text, " "));
-    if (!is_numeric($days)) {
+    if (!is_int($days)) {
         $city = $city . "%20" . $days;
         $displeyCityName  = $city . " " . $days;
         $days = 1;
