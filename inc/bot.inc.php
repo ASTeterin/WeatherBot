@@ -34,7 +34,7 @@ function helpComandHandler($telegram, $chat_id)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 }
 
-function showForecast($telegram, $chat_id, $text)
+function showForecast($telegram, $chat_id, $text, &$keyboard)
 {
     list($city, $days) = explode(" ", removeExtraSymbols($text, " ")) ;
     global $url; 
@@ -98,7 +98,7 @@ function startBot($telegram, $result)
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityHandler($telegram, $chat_id, $text, $keyboard);
         }else{
-            showForecast($telegram, $chat_id, $text);
+            showForecast($telegram, $chat_id, $text, $keyboard);
         }
     }    
 }
