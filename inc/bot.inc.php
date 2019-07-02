@@ -95,7 +95,7 @@ function startBot($telegram, $result)
             
         }elseif ($text == "/help") {
             helpComandHandler($telegram, $chat_id);
-        }elseif (getSubstBeforeBlank($text) == "/add") {
+        }elseif ((getSubstBeforeBlank($text) == "/add") || ($text == "Добавить в избранное")) {
             addFavoriteCityHandler($telegram, $chat_id, $text, $keyboard);
         }else{
             showForecast($telegram, $chat_id, $text, $keyboard);
