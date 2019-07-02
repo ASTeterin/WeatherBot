@@ -12,7 +12,6 @@ function initBot($token)
 
 function startComandHandler($telegram, $chat_id, $keyboard, $name)
 {
-    //initKeyboard($keyboard, $chat_id);
     $reply = "Здравствуйте, ";
         if (empty($name)) {
             $reply .= "незнакомец";
@@ -51,7 +50,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
             $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
-             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
             //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
@@ -90,7 +89,7 @@ function addFavoriteCityFromDB($telegram, $chat_id)
 function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 {
     list($command, $city, $days) = explode(" ", removeExtraSymbols($text, " "));
-    addFavoriteCity($city, $chat_id);
+    saveFavoriteCity($city, $chat_id);
     $keyboard = [["/help"],["/start"]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
