@@ -37,8 +37,8 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
 {
     list($city, $days) = explode(" ", removeExtraSymbols($text, " "));
     if (!is_numeric($days)) {
-        $city .= "%20";
-        $city .= $days;
+        $city = $city . "%20" . $days;
+        $displeyCityName  = $city . " " . $days;
         $days = 1;
     }
     global $url; 
@@ -47,10 +47,10 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
     if (!strpos($response, "error"))
     {
         addLastRequestedCity($city, $chat_id);
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $displeyCityName ]);
         $forecast = explode("\"date\":\"", $response);
         
-        $keyboard[] = ["/add " . $city];
+        $keyboard[] = ["/add " . $displeyCityName];
         
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
