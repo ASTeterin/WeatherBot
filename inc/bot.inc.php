@@ -56,9 +56,9 @@ function addFavoriteCityHandler($telegram, $chat_id, $text, $keyboard)
 {
     list($command, $city, $days) = explode(" ", removeExtraSymbols($text, " "));
     addFavoriteCity($city, $chat_id);
+    $keyboard = [["/help"],["/start"]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
