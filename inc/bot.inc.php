@@ -2,6 +2,7 @@
 
 const API_TOKEN = '832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE';
 const API_URL = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=";
+$url = "";
 
 function initBot($token)
 {
@@ -17,7 +18,7 @@ function startComandHandler($telegram, $chat_id, $keyboard, $name)
         } else {
             $reply .= $name;
         }
-    $reply .= "\nВы находитсь в в боте Погода в городах мира!";
+    $reply .= "\nВы находитсь в боте Погода в городах мира!";
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     
@@ -35,12 +36,14 @@ function helpComandHandler($telegram, $chat_id)
 function showForecast($telegram, $chat_id, $text)
 {
     list($city, $days) = explode(" ", removeExtraSymbols($text, " ")) ;
+    global $url; 
     $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
-    $str = getDataFromApi($url);
-    if (!strpos($str, "error"))
+    //$str = getDataFromApi($url);
+    $response = getForecast();
+    if (!strpos($response, "error"))
     {
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
-        $forecast = explode("\"date\":\"", $str);
+        $forecast = explode("\"date\":\"", $response);
 
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {

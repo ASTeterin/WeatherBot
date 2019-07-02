@@ -13,3 +13,9 @@
         curl_close($ch);
         return $data;
     }
+    
+    function getForecast(): string
+    {
+        global $url;
+        return getDataFromApi($url); 
+    }
