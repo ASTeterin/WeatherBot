@@ -12,6 +12,7 @@ function initBot($token)
 
 function startComandHandler($telegram, $chat_id, $keyboard, $name)
 {
+    initKeyboard($keyboard, $chat_id);
     $reply = "Здравствуйте, ";
         if (empty($name)) {
             $reply .= "незнакомец";
@@ -85,6 +86,7 @@ function startBot($telegram, $result)
         
         if ($text == "/start") {
             startComandHandler($telegram, $chat_id, $keyboard, $name);
+            
         }elseif ($text == "/help") {
             helpComandHandler($telegram, $chat_id);
         }elseif (getSubstBeforeBlank($text) == "/add") {

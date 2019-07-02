@@ -11,8 +11,7 @@ function createDbConnection()
 
 function addFavoriteCity($city, $chat_id)
 {
-    /*$db->where ("id_chat", $chat_id);
-    $user = $db->getOne ("session");*/
+
     global $db;
     $user_id = findUser($chat_id);
     if(!is_null($user_id)) {
@@ -52,11 +51,6 @@ function addNewUser($chat_id, $name)
     }
 }
 
-function createUser($chat_id, $name)
-{
-    global $db;
-    addNewUser($chat_id, $name);
-}
 
 function addCity()
 {
