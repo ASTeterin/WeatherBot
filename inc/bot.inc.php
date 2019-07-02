@@ -39,17 +39,21 @@ function showForecast($telegram, $chat_id, $text)
     list($city, $days) = explode(" ", removeExtraSymbols($text, " ")) ;
     global $url; 
     $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
-    //$str = getDataFromApi($url);
     $response = getForecast();
     if (!strpos($response, "error"))
     {
+        
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
         $forecast = explode("\"date\":\"", $response);
-
+        
+        $keyboard[] = ["добавить в избранное"];
+        
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
             $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }else{
         $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
