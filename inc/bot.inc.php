@@ -61,7 +61,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
     }  
 }
 
-function addFavoriteCity($telegram, $chat_id)
+function addFavoriteCity($telegram, $chat_id, $city)
 {
     saveFavoriteCity($city, $chat_id);
     $keyboard = [["/help"],["/start"]];
@@ -74,7 +74,7 @@ function addFavoriteCity($telegram, $chat_id)
 function addFavoriteCityFromDB($telegram, $chat_id)
 {
     $city = getLastRequestedCity($chat_id);
-    addFavoriteCity($telegram, $chat_id);
+    addFavoriteCity($telegram, $chat_id, $city );
     /*addFavoriteCity($city, $chat_id);
     $keyboard = [["/help"],["/start"]];
     initKeyboard($keyboard, $chat_id);
