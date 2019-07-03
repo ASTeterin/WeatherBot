@@ -35,7 +35,7 @@ function helpComandHandler($telegram, $chat_id)
 
 function showForecast($telegram, $chat_id, $text, &$keyboard)
 {
-    $city = mb_eregi_replace('[0-9]', '', $text);
+    $city = trim(mb_eregi_replace('[0-9]', '', $text));
     $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
 
     global $url; 
