@@ -98,7 +98,8 @@ function initKeyboard(&$keyboard, $chat_id)
     $isSubscribed = getSubscribedStatus($chat_id);
     if (!is_null($favoriteCity)) {
         $keyboard[] = [$favoriteCity];
-    }
+        $keyboard[] = ($isSubscribed == 1)? ["/unsubscribe"]: ["/subscribe"];
+    }  
 }
 
 function startBot($telegram, $result)
