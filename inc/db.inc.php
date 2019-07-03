@@ -31,6 +31,14 @@ function getFavoriteCity($chat_id)
     return $user['city']; 
 }
 
+function getSubscribedStatus($chat_id)
+{
+    global $db;
+    $db->where ("id_chat", $chat_id);
+    $user = $db->getOne ("session");
+    return $user['subscription']; 
+}
+
 function getLastRequestedCity($chat_id)
 {
     global $db;
@@ -67,6 +75,33 @@ function addLastRequestedCity($city, $chat_id)
     if(!is_null($user_id)) {
         $data = [
             "last_request" => $city,
+        ];
+        $db->where ("id_session", $user_id);
+        $db->update ('session', $data);
+    }
+}
+
+function setSubscribedStatus($chat_id)
+{
+    global $db;
+    $user_id = findUser($chat_id);
+    if(!is_null($user_id)) {
+        $data = [
+            "subscription" => 1,
+        ];
+        $db->where ("id_session", $user_id);
+        $db->update ('session', $data);
+    }
+}
+
+
+function removeSubscribedStatus($chat_id)
+{
+    global $db;
+    $user_id = findUser($chat_id);
+    if(!is_null($user_id)) {
+        $data = [
+            "subscription" => 0,
         ];
         $db->where ("id_session", $user_id);
         $db->update ('session', $data);

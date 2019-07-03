@@ -71,6 +71,7 @@ function addFavoriteCity($telegram, $chat_id, $city)
     saveFavoriteCity($city, $chat_id);
     $keyboard = [["/help"],["/start"]];
     initKeyboard($keyboard, $chat_id);
+    $keyboard[] = ["/subscribe"];
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
@@ -94,6 +95,7 @@ function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 function initKeyboard(&$keyboard, $chat_id)
 {
     $favoriteCity = getFavoriteCity($chat_id);
+    $isSubscribed = getSubscribedStatus($chat_id);
     if (!is_null($favoriteCity)) {
         $keyboard[] = [$favoriteCity];
     }
