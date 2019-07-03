@@ -117,7 +117,7 @@ function startBot($telegram, $result)
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
         }else{
-            //showForecast($telegram, $chat_id, $text, $keyboard);
+            showForecast($telegram, $chat_id, $text, $keyboard);
         }
     }    
 }
