@@ -37,7 +37,8 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
 {
     $city = trim(mb_eregi_replace('[0-9]', '', $text));
     $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
-
+    $days = ($days > 10)? 10 : $days; 
+    
     global $url; 
     $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
     $response = getForecast();
