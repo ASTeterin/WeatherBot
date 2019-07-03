@@ -31,8 +31,10 @@ function runSubscribe($telegram)
 {
     $users = getSubscribeList();
     foreach ($users as $user) {
+        
         $chat_id = $user['id_chat'];
         $favoriteCity = $user['city'];
+        error_log($chat_id);
         sendSubscribe($telegram, $chat_id, $favoriteCity);
     }
 }
