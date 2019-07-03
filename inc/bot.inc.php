@@ -65,6 +65,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
 function addFavoriteCity($telegram, $chat_id, $city)
 {
     saveFavoriteCity($city, $chat_id);
+    removeSubscribedStatus($chat_id);
     $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
