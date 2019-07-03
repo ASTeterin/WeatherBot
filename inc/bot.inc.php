@@ -100,7 +100,7 @@ function initKeyboard(&$keyboard, $chat_id)
 
 function startBot($telegram, $result)
 {
-    $text = mb__strtolower($result["message"]["text"]); //Текст сообщения
+    $text = mb_strtolower($result["message"]["text"]); //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["/help"],["/start"]];
