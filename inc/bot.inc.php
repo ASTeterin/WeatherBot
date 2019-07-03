@@ -99,7 +99,7 @@ function initKeyboard(&$keyboard, $chat_id)
     }  
 }
 
-function subscribeOnFavoriteCity($chat_id)
+function subscribeOnFavoriteCity($telegram, $chat_id)
 {
     setSubscribedStatus($chat_id);
     $keyboard = [["/help"],["/start"]];
@@ -129,7 +129,7 @@ function startBot($telegram, $result)
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
         }elseif ($text == "/subscribe") {
-            subscribeOnFavoriteCity($chat_id);
+            subscribeOnFavoriteCity($telegram, $chat_id);
             
             
         }elseif ($text == "/unsubscribe") {
