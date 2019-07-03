@@ -56,7 +56,6 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
             $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-            //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
     }else{
         $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
@@ -69,7 +68,6 @@ function addFavoriteCity($telegram, $chat_id, $city)
     saveFavoriteCity($city, $chat_id);
     $keyboard = [["/help"]];
     initKeyboard($keyboard, $chat_id);
-    //$keyboard[] = ["/subscribe"];
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
@@ -115,7 +113,7 @@ function unsubscribeOnFavoriteCity($telegram, $chat_id)
     $keyboard = [["/help"]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $reply = "Подписка jnvtytyf";
+    $reply = "Подписка отменена";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 

@@ -33,15 +33,12 @@ function parseForecast($forecast)
         $minTempPosEnd = strpos($daylyForecast, ",", $minTempPos);
         $minTemp = substr($daylyForecast, $minTempPos, $minTempPosEnd - $minTempPos); 
 
-
-
         $rainPos = strpos($daylyForecast, "{\"text\":\"", $minTempPosEnd) + 9;
         $rainPosEnd = strpos($daylyForecast, ",", $rainPos); 
         $rain = substr($daylyForecast, $rainPos, $rainPosEnd - $rainPos - 1); 
         $array = ['date' => $date, 'max_temp' => $maxTemp, 'min_temp' => $minTemp, 'rain' => $rain];
-        //echo $maxTemp . " " . $minTemp . " " . $rain;
+
         $data[] = $array;
-        //var_dump($array);
     }  
     return $data;
 }
