@@ -50,9 +50,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
         }
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
         $forecast = explode("\"date\":\"", $response);
-        
-       
-        
+         
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
             $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
@@ -71,7 +69,7 @@ function addFavoriteCity($telegram, $chat_id, $city)
     saveFavoriteCity($city, $chat_id);
     $keyboard = [["/help"],["/start"]];
     initKeyboard($keyboard, $chat_id);
-    $keyboard[] = ["/subscribe"];
+    //$keyboard[] = ["/subscribe"];
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
@@ -88,7 +86,6 @@ function addFavoriteCityFromDB($telegram, $chat_id)
 function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 {
     $city = substr($text, 5);
-    //$days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
     addFavoriteCity($telegram, $chat_id, $city );
 }
 
@@ -100,6 +97,17 @@ function initKeyboard(&$keyboard, $chat_id)
         $keyboard[] = [$favoriteCity];
         $keyboard[] = ($isSubscribed == 1)? ["/unsubscribe"]: ["/subscribe"];
     }  
+}
+
+function subscribeOnFavoriteCity($chat_id)
+{
+    setSubscribedStatus($chat_id);
+    $keyboard = [["/help"],["/start"]];
+    initKeyboard($keyboard, $chat_id);
+    //$keyboard[] = ["/subscribe"];
+    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    $reply = "Подписка оформлена";
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
 function startBot($telegram, $result)
@@ -121,7 +129,9 @@ function startBot($telegram, $result)
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
         }elseif ($text == "/subscribe") {
-            setSubscribedStatus($chat_id);
+            subscribeOnFavoriteCity($chat_id);
+            
+            
         }elseif ($text == "/unsubscribe") {
             removeSubscribedStatus($chat_id);
         }else{
