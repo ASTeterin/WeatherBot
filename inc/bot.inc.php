@@ -67,7 +67,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
 function addFavoriteCity($telegram, $chat_id, $city)
 {
     saveFavoriteCity($city, $chat_id);
-    $keyboard = [["/help"],["/start"]];
+    $keyboard = [["/help"]];
     initKeyboard($keyboard, $chat_id);
     //$keyboard[] = ["/subscribe"];
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
@@ -102,7 +102,7 @@ function initKeyboard(&$keyboard, $chat_id)
 function subscribeOnFavoriteCity($telegram, $chat_id)
 {
     setSubscribedStatus($chat_id);
-    $keyboard = [["/help"],["/start"]];
+    $keyboard = [["/help"]];
     initKeyboard($keyboard, $chat_id);
     //$keyboard[] = ["/subscribe"];
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
@@ -115,7 +115,7 @@ function startBot($telegram, $result)
     $text = mb_strtolower($result["message"]["text"]); //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["/help"],["/start"]];
+    $keyboard = [["/help"]];
     initKeyboard($keyboard, $chat_id);
     if($text){
         
