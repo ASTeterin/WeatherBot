@@ -35,26 +35,22 @@ function helpComandHandler($telegram, $chat_id)
 
 function showForecast($telegram, $chat_id, $text, &$keyboard)
 {
-    //list($city, $days) = explode(" ", removeExtraSymbols($text, " "));
     $city = mb_eregi_replace('[0-9]', '', $text);
     $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
-    
-    /*if (!is_int($days)) {
-        $city = $city . " " . $days;
-        //$displeyCityName  = $city . " " . $days;
-        $days = 1;
-    }*/
-    
+
     global $url; 
     $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
     $response = getForecast();
     if (!strpos($response, "error"))
     {
-        addLastRequestedCity($city, $chat_id);
+        if ($city != getLastRequestedCity($chat_id)) {
+            addLastRequestedCity($city, $chat_id);
+            $keyboard[] = ["/add " . $city];
+        }
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
         $forecast = explode("\"date\":\"", $response);
         
-        $keyboard[] = ["/add " . $city];
+       
         
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
@@ -89,18 +85,10 @@ function addFavoriteCityFromDB($telegram, $chat_id)
 
 function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 {
-    //list($command, $city) = explode(" ", removeExtraSymbols($text, " "));
     $city = substr($text, 5);
-//mb_eregi_replace('[0-9]', '', $text);
     $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
     addFavoriteCity($telegram, $chat_id, $city );
-    /*saveFavoriteCity($city, $chat_id);
-    $keyboard = [["/help"],["/start"]];
-    initKeyboard($keyboard, $chat_id);
-    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-*/}
+    }
 
 function initKeyboard(&$keyboard, $chat_id)
 {
@@ -108,7 +96,6 @@ function initKeyboard(&$keyboard, $chat_id)
     if (!is_null($favoriteCity)) {
         $keyboard[] = [$favoriteCity];
     }
-    //$reply = "Клавиатура проинициализирована";
 }
 
 function startBot($telegram, $result)
