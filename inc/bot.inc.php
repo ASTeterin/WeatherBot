@@ -104,9 +104,18 @@ function subscribeOnFavoriteCity($telegram, $chat_id)
     setSubscribedStatus($chat_id);
     $keyboard = [["/help"]];
     initKeyboard($keyboard, $chat_id);
-    //$keyboard[] = ["/subscribe"];
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Подписка оформлена";
+    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
+}
+
+function unsubscribeOnFavoriteCity($telegram, $chat_id)
+{
+    removeSubscribedStatus($chat_id);
+    $keyboard = [["/help"]];
+    initKeyboard($keyboard, $chat_id);
+    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    $reply = "Подписка jnvtytyf";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
@@ -133,7 +142,7 @@ function startBot($telegram, $result)
             
             
         }elseif ($text == "/unsubscribe") {
-            removeSubscribedStatus($chat_id);
+            unsubscribeOnFavoriteCity($telegram, $chat_id);
         }else{
             showForecast($telegram, $chat_id, $text, $keyboard);
         }
