@@ -10,7 +10,6 @@ function createDbConnection()
 
 function saveFavoriteCity($city, $chat_id)
 {
-
     global $db;
     $user_id = findUser($chat_id);
     if(!is_null($user_id)) {

@@ -2,6 +2,7 @@
 
 const API_TOKEN = '832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE';
 const API_URL = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=";
+const BASE_KEYBOARD = "/help"; 
 $url = "";
 
 function initBot($token)
@@ -66,7 +67,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
 function addFavoriteCity($telegram, $chat_id, $city)
 {
     saveFavoriteCity($city, $chat_id);
-    $keyboard = [["/help"]];
+    $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
