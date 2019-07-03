@@ -89,7 +89,10 @@ function addFavoriteCityFromDB($telegram, $chat_id)
 
 function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 {
-    list($command, $city) = explode(" ", removeExtraSymbols($text, " "));
+    //list($command, $city) = explode(" ", removeExtraSymbols($text, " "));
+    $city = substr($text, 5);
+//mb_eregi_replace('[0-9]', '', $text);
+    $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
     addFavoriteCity($telegram, $chat_id, $city );
     /*saveFavoriteCity($city, $chat_id);
     $keyboard = [["/help"],["/start"]];
