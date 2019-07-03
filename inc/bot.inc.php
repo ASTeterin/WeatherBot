@@ -79,16 +79,16 @@ function addFavoriteCityFromDB($telegram, $chat_id)
 {
     $city = getLastRequestedCity($chat_id);
     addFavoriteCity($telegram, $chat_id, $city );
- }
+}
      
      
 
 function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 {
     $city = substr($text, 5);
-    $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
+    //$days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
     addFavoriteCity($telegram, $chat_id, $city );
-    }
+}
 
 function initKeyboard(&$keyboard, $chat_id)
 {
@@ -117,7 +117,7 @@ function startBot($telegram, $result)
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
         }else{
-            showForecast($telegram, $chat_id, $text, $keyboard);
+            //showForecast($telegram, $chat_id, $text, $keyboard);
         }
     }    
 }
