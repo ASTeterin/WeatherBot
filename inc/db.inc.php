@@ -107,3 +107,10 @@ function removeSubscribedStatus($chat_id)
         $db->update ('session', $data);
     }
 }
+
+function getSubscribeList()
+{
+    global $db;
+    $db->where ("subscription", 1);
+    return $db->get("session", null, ["id_chat", "city"]);
+}

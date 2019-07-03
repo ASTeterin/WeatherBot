@@ -9,7 +9,7 @@ $url = "";
 $telegram = new Api(API_TOKEN); //Устанавливаем токен, полученный у BotFather
 //$result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя  
 
-function runSubscribe($telegram, $chat_id, $city)
+function sendSubscribe($telegram, $chat_id, $city)
 {
     global $url; 
     $url = API_URL . urlencode($city) . "&days=2&lang=ru";
@@ -27,5 +27,16 @@ function runSubscribe($telegram, $chat_id, $city)
     }
 }
 
-runSubscribe($telegram, "601359283", "Москва");
+function runSubscribe($telegram)
+{
+    $users = getSubscribeList();
+    foreach ($users as $user) {
+        $chat_id = $user['id_chat'];
+        $favoriteCity = $user['city'];
+        sendSubscribe($telegram, $chat_id, $favoriteCity);
+    }
+}
+
+runSubscribe($telegram);
+
 
