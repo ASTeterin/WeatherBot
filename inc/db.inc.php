@@ -2,6 +2,7 @@
 
 $db = null;
 
+
 function createDbConnection()
 { 
     global $db;
@@ -70,12 +71,12 @@ function addLastRequestedCity($city, $chat_id)
 {
     global $db;
     $user_id = findUser($chat_id);
-    if(!is_null($user_id)) {
+    if (!is_null($user_id)) {
         $data = [
             "last_request" => $city,
         ];
-        $db->where ("id_session", $user_id);
-        $db->update ('session', $data);
+        $db->where("id_session", $user_id);
+        $db->update('session', $data);
     }
 }
 

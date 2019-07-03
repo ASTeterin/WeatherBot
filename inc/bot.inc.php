@@ -1,9 +1,8 @@
 <?php
 
-const API_TOKEN = '832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE';
-const API_URL = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=";
+
 const BASE_KEYBOARD = "/help"; 
-$url = "";
+
 
 function initBot($token)
 {
@@ -40,9 +39,8 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
     $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
     $days = ($days > 10)? 10 : $days; 
     
-    global $url; 
-    $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
-    $response = getForecast();
+    
+    $response = getForecast($city, $days);
     if (!strpos($response, "error"))
     {
         if ($city != getLastRequestedCity($chat_id)) {
@@ -101,7 +99,7 @@ function initKeyboard(&$keyboard, $chat_id)
 function subscribeOnFavoriteCity($telegram, $chat_id)
 {
     setSubscribedStatus($chat_id);
-    $keyboard = [["/help"]];
+    $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Подписка оформлена";
@@ -111,7 +109,7 @@ function subscribeOnFavoriteCity($telegram, $chat_id)
 function unsubscribeOnFavoriteCity($telegram, $chat_id)
 {
     removeSubscribedStatus($chat_id);
-    $keyboard = [["/help"]];
+    $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Подписка отменена";
@@ -123,10 +121,9 @@ function startBot($telegram, $result)
     $text = mb_strtolower($result["message"]["text"]); //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["/help"]];
+    $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     if($text){
-        
         if ($text == "/start") {
             startComandHandler($telegram, $chat_id, $keyboard, $name);
             
@@ -136,13 +133,11 @@ function startBot($telegram, $result)
             addFavoriteCityFromDB($telegram, $chat_id);
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
-        }elseif ($text == "/subscribe") {
-            subscribeOnFavoriteCity($telegram, $chat_id);
-            
-            
-        }elseif ($text == "/unsubscribe") {
+        } elseif ($text == "/subscribe") {
+            subscribeOnFavoriteCity($telegram, $chat_id);    
+        } elseif ($text == "/unsubscribe") {
             unsubscribeOnFavoriteCity($telegram, $chat_id);
-        }else{
+        } else{
             showForecast($telegram, $chat_id, $text, $keyboard);
         }
     }    

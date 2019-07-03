@@ -1,6 +1,9 @@
 <?php
 
-    function getDataFromApi($url): ?string
+const API_TOKEN = '832044822:AAEb48OoiZoxf4YTrS3T3-Z1GWcugj_VMcE';
+const API_URL = "http://api.apixu.com/v1/forecast.json?key=a063d1eac8054ab392f195555192506&q=";    
+
+function getDataFromApi($url): ?string
     {
         $ch = curl_init();
         
@@ -14,9 +17,9 @@
         return $data;
     }
     
-    function getForecast(): string
+    function getForecast($city, $days): string
     {
-        global $url;
+        $url = API_URL . urlencode($city) . "&days=" . $days . "&lang=ru";
         return getDataFromApi($url); 
     }
     
