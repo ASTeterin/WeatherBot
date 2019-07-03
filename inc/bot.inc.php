@@ -121,7 +121,9 @@ function startBot($telegram, $result)
         }elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
         }elseif ($text == "/subscribe") {
-            
+            setSubscribedStatus($chat_id);
+        }elseif ($text == "/unsubscribe") {
+            removeSubscribedStatus($chat_id);
         }else{
             showForecast($telegram, $chat_id, $text, $keyboard);
         }
