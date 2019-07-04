@@ -58,8 +58,6 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
         foreach ($weather['forecast'] as $dailyForecast) {
             $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . ". \nМинимальная температура " . $dailyForecast['min_temp'] . "\nМаксимальная температура " . $dailyForecast['max_temp'];
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
-           /* $url = $dailyForecast['icon'];
-            $telegram->sendPhoto([ 'chat_id' => $chat_id, 'photo' => $url, 'caption' => "Описание." ]);*/
         }
     }else{
         $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
