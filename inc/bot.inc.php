@@ -47,8 +47,6 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
             addLastRequestedCity($city, $chat_id);
             $keyboard[] = ["/add " . $city];
         }
-       
-        //$forecast = explode("\"date\":\"", $response);
          
        $weather = parseForecast($response);
        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $response ]);
