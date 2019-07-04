@@ -49,8 +49,16 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
         }
          
        $weather = parseForecast($response);
-       $reply =  $weather['location']['country'];
-       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+       //$reply =  $weather['location']['country'] . $weather['location']['city'] . ;
+
+       //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+        foreach ($weather['forecast'] as $dailyForecast) {
+            $reply = $dailyForecast['date'] . " " . $dailyForecast['condition'] . "_______";
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+    
+        }
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+    
     
     }else{
         $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";

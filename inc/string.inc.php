@@ -26,6 +26,7 @@ function parseForecast($response)
     $data = array();
     $location = array();
     $forecast = array();
+    $
 
     $city = $response['location']['name'];
     $country = $response['location']['country'];
@@ -33,12 +34,13 @@ function parseForecast($response)
     $location['country'] = $country; 
   
     foreach($response['forecast']['forecastday'] as $dayForecast) {
-        $dayly['date'] = $dayForecast['date'];
-        $dayly['max_temp'] = $dayForecast['day']['maxtemp_c'];
-        $dayly['min_temp'] = $dayForecast['day']['mintemp_c'];
-        $dayly['condition'] = $dayForecast['day']['condition']['text'];
-        $dayly['icon'] = $dayForecast['day']['condition']['icon'];
-        $forecast[] = $dayly;
+        $daily = array();
+        $daily['date'] = $dayForecast['date'];
+        $daily['max_temp'] = $dayForecast['day']['maxtemp_c'];
+        $daily['min_temp'] = $dayForecast['day']['mintemp_c'];
+        $daily['condition'] = $dayForecast['day']['condition']['text'];
+        $daily['icon'] = $dayForecast['day']['condition']['icon'];
+        $forecast[] = $daily;
     }
 
     $data['location'] = $location;
