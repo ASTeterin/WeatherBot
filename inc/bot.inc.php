@@ -47,11 +47,12 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
             addLastRequestedCity($city, $chat_id);
             $keyboard[] = ["/add " . $city];
         }
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $response ]);
+       
         //$forecast = explode("\"date\":\"", $response);
          
-       /* $weather = parseForecast($response);
-        
+       $weather = parseForecast($response);
+       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $weather['location'][0]['country'] ]);
+    /*    
         for ($i = 1; $i < count($weather); $i++) {
             $reply = $weather[$forecat]['date'] ;//. " " . $weather[$i][''] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
