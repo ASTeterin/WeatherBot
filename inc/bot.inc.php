@@ -52,7 +52,8 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
          
        $weather = parseForecast($response);
        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $response ]);
-       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $weather['location']['country'] ]);
+       $reply =  $weather['location']['country'];
+       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
     /*    
         for ($i = 1; $i < count($weather); $i++) {
             $reply = $weather[$forecat]['date'] ;//. " " . $weather[$i][''] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
