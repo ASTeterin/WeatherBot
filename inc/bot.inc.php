@@ -49,20 +49,15 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
             addLastRequestedCity($city, $chat_id);
             $keyboard[] = ["/add " . $city];
         }
-
         $decodeResponse = json_decode($response, true); 
         $weather = parseForecast($decodeResponse);
-       //$reply =  $weather['location']['country'] . $weather['location']['city'] . ;
+        $reply =  $weather['location']['city'] . ", " . $weather['location']['country'];
 
-       //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         foreach ($weather['forecast'] as $dailyForecast) {
-            $reply = $dailyForecast['date'] . " " . $dailyForecast['condition'] . "_______";
+            $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . ". \nМинимальная температура " . $dailyForecast['min_temp'] . "\nМаксимальная температура " . $dailyForecast['max_temp'];
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
-    
         }
-        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-    
-    
     }else{
         $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
