@@ -41,23 +41,26 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
     
     
     $response = getForecast($city, $days);
+    
+
     if (!strpos($response, "error"))
     {
         if ($city != getLastRequestedCity($chat_id)) {
             addLastRequestedCity($city, $chat_id);
             $keyboard[] = ["/add " . $city];
         }
-         
-       $weather = parseForecast($response);
+
+        $decodeResponse = json_decode($response, true); 
+        $weather = parseForecast($decodeResponse);
        //$reply =  $weather['location']['country'] . $weather['location']['city'] . ;
 
        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         foreach ($weather['forecast'] as $dailyForecast) {
             $reply = $dailyForecast['date'] . " " . $dailyForecast['condition'] . "_______";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $response ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
     
         }
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
     
     
     }else{
