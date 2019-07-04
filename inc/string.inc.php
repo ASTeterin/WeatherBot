@@ -26,7 +26,6 @@ function parseForecast($response)
     $data = array();
     $location = array();
     $forecast = array();
-    $
 
     $city = $response['location']['name'];
     $country = $response['location']['country'];
