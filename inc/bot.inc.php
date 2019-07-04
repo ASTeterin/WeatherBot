@@ -52,8 +52,9 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
         $decodeResponse = json_decode($response, true); 
         $weather = parseForecast($decodeResponse);
         $reply =  $weather['location']['city'] . ", " . $weather['location']['country'];
+        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         foreach ($weather['forecast'] as $dailyForecast) {
             $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . ". \nМинимальная температура " . $dailyForecast['min_temp'] . "\nМаксимальная температура " . $dailyForecast['max_temp'];
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
