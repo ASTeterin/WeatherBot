@@ -21,7 +21,7 @@ function removeExtraSymbols($str, $symbol)
 }
 
 
-function parseForecast($forecast)
+function parseForecast($response)
 {
     $data = array();
     $location = array();
