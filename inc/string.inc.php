@@ -51,8 +51,8 @@ function parseForecast($forecast)
 
     $city = $response['location']['name'];
     $country = $response['location']['country'];
-    $location[] = ['city' => $city];
-    $location[] = ['country' => $country]; 
+    $location['city'] = $city;
+    $location['country'] = $country; 
   
     foreach($response['forecast']['forecastday'] as $dayForecast) {
         $dayly['date'] = $dayForecast['date'];
