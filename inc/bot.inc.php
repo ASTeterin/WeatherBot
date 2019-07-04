@@ -54,7 +54,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         foreach ($weather['forecast'] as $dailyForecast) {
             $reply = $dailyForecast['date'] . " " . $dailyForecast['condition'] . "_______";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $response ]);
     
         }
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
