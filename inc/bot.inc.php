@@ -50,7 +50,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
          
        $weather = parseForecast($response);
        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $response ]);
-       $reply =  $weather['location']['country'];
+       $reply =  $weather;
        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
     
     }else{
