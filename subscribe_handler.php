@@ -10,7 +10,8 @@ function sendSubscribe($telegram, $chat_id, $city)
 {
     global $url; 
     $url = API_URL . urlencode($city) . "&days=2&lang=ru";
-    $response = getForecast();
+    $day = 2;
+    $response = getForecast($city, $day);
 
 
     if (!strpos($response, "error"))
