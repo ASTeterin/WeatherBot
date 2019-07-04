@@ -48,11 +48,11 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
             $keyboard[] = ["/add " . $city];
         }
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $city ]);
-        $forecast = explode("\"date\":\"", $response);
+        //$forecast = explode("\"date\":\"", $response);
          
         $weather = parseForecast($forecast);
         for ($i = 1; $i < count($weather); $i++) {
-            $reply = $weather[$i]['date'] . " " . $weather[$i]['rain'] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
+            $reply = $weather[$forecat]['date'] ;//. " " . $weather[$i][''] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
