@@ -54,12 +54,7 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
        //$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $response ]);
        $reply =  $weather['location']['country'];
        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-    /*    
-        for ($i = 1; $i < count($weather); $i++) {
-            $reply = $weather[$forecat]['date'] ;//. " " . $weather[$i][''] . ". \nМинимальная температура " . $weather[$i]['min_temp'] . "\nМаксимальная температура " . $weather[$i]['max_temp'];
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-        }*/
+    
     }else{
         $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);

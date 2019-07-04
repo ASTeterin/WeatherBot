@@ -67,5 +67,4 @@ function parseForecast($forecast)
     $data['forecast'] = $forecast;
 
     return $data;
-
 }
