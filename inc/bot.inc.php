@@ -130,7 +130,28 @@ function unsubscribeOnFavoriteCity($telegram, $chat_id)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
-//function handleComand
+function handleComamnd($command)
+{
+    switch ($command) {
+        case START_COMMAND:
+            startComandHandler($telegram, $chat_id, $keyboard, $name);
+            break;
+        case HELP_COMMAND:
+            helpComandHandler($telegram, $chat_id);
+            break;
+        case ADD_COMMAND:
+            addFavoriteCityFromDB($telegram, $chat_id);
+            break;
+        case SUBSCRIBE_COMMAND:
+            subscribeOnFavoriteCity($telegram, $chat_id);
+            break;
+        case UNSUBSCRIBE_COMMAND:
+            unsubscribeOnFavoriteCity($telegram, $chat_id);
+            break;
+        default:
+            showForecast($telegram, $chat_id, $text, $keyboard);
+    }
+}
 
 function startBot($telegram, $result)
 {
@@ -140,19 +161,6 @@ function startBot($telegram, $result)
     $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     if ($text) {
-        if ($text == START_COMMAND) {
-            startComandHandler($telegram, $chat_id, $keyboard, $name);
-            
-        } elseif ($text == HELP_COMMAND) {
-            helpComandHandler($telegram, $chat_id);
-        } elseif ($text == ADD_COMMAND) {
-            addFavoriteCityFromDB($telegram, $chat_id);
-        } elseif ($text == SUBSCRIBE_COMMAND) {
-            subscribeOnFavoriteCity($telegram, $chat_id);    
-        } elseif ($text == SUBSCRIBE_COMMAND) {
-            unsubscribeOnFavoriteCity($telegram, $chat_id);
-        } else{
-            showForecast($telegram, $chat_id, $text, $keyboard);
-        }
+        handleComamnd($text);
     }    
 }
