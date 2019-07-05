@@ -24,7 +24,7 @@ function initBot($token)
     return $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
 }
 
-function startComandHandler($telegram, $chat_id, $keyboard, $name)
+function startComandHandler($telegram, $chatId, $keyboard, $name)
 {
     $reply = "Здравствуйте, ";
         if (empty($name)) {
@@ -34,133 +34,131 @@ function startComandHandler($telegram, $chat_id, $keyboard, $name)
         }
     $reply .= "\nВы находитсь в боте Погода в городах мира!";
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     
-    addNewUser($chat_id, $name);
+    addNewUser($chatId, $name);
 }
 
-function helpComandHandler($telegram, $chat_id)
+function helpComandHandler($telegram, $chatId)
 {
     $reply = HELP_INFO;
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply ]);
 }
 
-function showForecast($telegram, $chat_id, $text, &$keyboard)
+function showForecast($telegram, $chatId, $text, &$keyboard)
 {
     $city = trim(mb_eregi_replace('[0-9]', '', $text));
     $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
     $days = ($days > 10)? 10 : $days; 
     
-    
     $response = getForecast($city, $days);
-    
 
     if (!strpos($response, "error"))
     {
-        if ($city != getLastRequestedCity($chat_id)) {
-            addLastRequestedCity($city, $chat_id);
+        if ($city != getLastRequestedCity($chatId)) {
+            addLastRequestedCity($city, $chatId);
             $keyboard[] = ["/add " . $city];
         }
         $decodeResponse = json_decode($response, true); 
         $weather = parseForecast($decodeResponse);
         $reply =  $weather['location']['city'] . ", " . $weather['location']['country'];
         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+        $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 
         foreach ($weather['forecast'] as $dailyForecast) {
             $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . MIN_TEMPERATURE . $dailyForecast['min_temp'] . MAX_TEMPERATURE . $dailyForecast['max_temp'];
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
+            $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply]);
         }
     }else{
         $reply = CITY . '<b>' . $city . '</b>' . " не найден";
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
+        $telegram->sendMessage([ 'chat_id' => $chatId, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
     }  
 }
 
-function addFavoriteCity($telegram, $chat_id, $city)
+function addFavoriteCity($telegram, $chatId, $city)
 {
-    saveFavoriteCity($city, $chat_id);
-    removeSubscribedStatus($chat_id);
+    saveFavoriteCity($city, $chatId);
+    removeSubscribedStatus($chatId);
     $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chat_id);
+    initKeyboard($keyboard, $chatId);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = CITY . $city .  ADD;
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    $telegram->sendMessage([ 'chat_id' => $chatId, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
-function addFavoriteCityFromDB($telegram, $chat_id)
+function addFavoriteCityFromDB($telegram, $chatId)
 {
-    $city = getLastRequestedCity($chat_id);
-    addFavoriteCity($telegram, $chat_id, $city );
+    $city = getLastRequestedCity($chatId);
+    addFavoriteCity($telegram, $chatId, $city );
 }   
 
-function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
+function addFavoriteCityFromRequest($telegram, $chatId, $text, $keyboard)
 {
     $city = substr($text, 5);
-    addFavoriteCity($telegram, $chat_id, $city );
+    addFavoriteCity($telegram, $chatId, $city );
 }
 
-function initKeyboard(&$keyboard, $chat_id)
+function initKeyboard(&$keyboard, $chatId)
 {
-    $favoriteCity = getFavoriteCity($chat_id);
+    $favoriteCity = getFavoriteCity($chatId);
     if (!is_null($favoriteCity)) {
-        $isSubscribed = getSubscribedStatus($chat_id);
+        $isSubscribed = getSubscribedStatus($chatId);
         $keyboard[] = [$favoriteCity];
         $keyboard[] = ($isSubscribed == 1)? ["/unsubscribe"]: ["/subscribe"];
     }  
 }
 
-function subscribeOnFavoriteCity($telegram, $chat_id)
+function subscribeOnFavoriteCity($telegram, $chatId)
 {
-    setSubscribedStatus($chat_id);
+    setSubscribedStatus($chatId);
     $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chat_id);
+    initKeyboard($keyboard, $chatId);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Подписка оформлена";
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
+    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
-function unsubscribeOnFavoriteCity($telegram, $chat_id)
+function unsubscribeOnFavoriteCity($telegram, $chatId)
 {
-    removeSubscribedStatus($chat_id);
+    removeSubscribedStatus($chatId);
     $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chat_id);
+    initKeyboard($keyboard, $chatId);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Подписка отменена";
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
+    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
-function handleComamnd($command)
+function handleComamnd($command, $telegram, $chatId, $keyboard, $name)
 {
     switch ($command) {
         case START_COMMAND:
-            startComandHandler($telegram, $chat_id, $keyboard, $name);
+            startComandHandler($telegram, $chatId, $keyboard, $name);
             break;
         case HELP_COMMAND:
-            helpComandHandler($telegram, $chat_id);
+            helpComandHandler($telegram, $chatId);
             break;
         case ADD_COMMAND:
-            addFavoriteCityFromDB($telegram, $chat_id);
+            addFavoriteCityFromDB($telegram, $chatId);
             break;
         case SUBSCRIBE_COMMAND:
-            subscribeOnFavoriteCity($telegram, $chat_id);
+            subscribeOnFavoriteCity($telegram, $chatId);
             break;
         case UNSUBSCRIBE_COMMAND:
-            unsubscribeOnFavoriteCity($telegram, $chat_id);
+            unsubscribeOnFavoriteCity($telegram, $chatId);
             break;
         default:
-            showForecast($telegram, $chat_id, $text, $keyboard);
+            showForecast($telegram, $chatId, $command, $keyboard);
     }
 }
 
 function startBot($telegram, $result)
 {
     $text = mb_strtolower($result["message"]["text"]); //Текст сообщения
-    $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
+    $chatId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chat_id);
+    initKeyboard($keyboard, $chatId);
     if ($text) {
-        handleComamnd($text);
+        handleComamnd($text, $telegram, $chatId, $keyboard, $name);
     }    
 }
