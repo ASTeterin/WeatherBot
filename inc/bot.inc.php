@@ -130,7 +130,7 @@ function unsubscribeOnFavoriteCity($telegram, $chat_id)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
-function handleComand
+//function handleComand
 
 function startBot($telegram, $result)
 {
