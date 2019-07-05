@@ -93,8 +93,8 @@ function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 function initKeyboard(&$keyboard, $chat_id)
 {
     $favoriteCity = getFavoriteCity($chat_id);
-    $isSubscribed = getSubscribedStatus($chat_id);
     if (!is_null($favoriteCity)) {
+        $isSubscribed = getSubscribedStatus($chat_id);
         $keyboard[] = [$favoriteCity];
         $keyboard[] = ($isSubscribed == 1)? ["/unsubscribe"]: ["/subscribe"];
     }  
@@ -127,15 +127,15 @@ function startBot($telegram, $result)
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
-    if($text){
+    if ($text) {
         if ($text == "/start") {
             startComandHandler($telegram, $chat_id, $keyboard, $name);
             
-        }elseif ($text == "/help") {
+        } elseif ($text == "/help") {
             helpComandHandler($telegram, $chat_id);
-        }elseif ($text == "Добавить в избранное") {
+        } elseif ($text == "Добавить в избранное") {
             addFavoriteCityFromDB($telegram, $chat_id);
-        }elseif (getSubstBeforeBlank($text) == "/add") {
+        } elseif (getSubstBeforeBlank($text) == "/add") {
             addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
         } elseif ($text == "/subscribe") {
             subscribeOnFavoriteCity($telegram, $chat_id);    

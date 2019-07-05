@@ -1,12 +1,16 @@
 <?php
 
+const HOST = 'b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com';
+const USER = 'dv8waucz07pdmu54';
+const PASSWORD = 'nvy4ervmlp4wpzhe';
+const DATABASE = 'lq8s88g5if4zpb7e';
 $db = null;
 
 
 function createDbConnection()
 { 
     global $db;
-    $db = new MysqliDb ('b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com', 'dv8waucz07pdmu54', 'nvy4ervmlp4wpzhe', 'lq8s88g5if4zpb7e');
+    $db = new MysqliDb (HOST, USER, PASSWORD, DATABASE);
 }
 
 function saveFavoriteCity($city, $chat_id)
@@ -14,9 +18,7 @@ function saveFavoriteCity($city, $chat_id)
     global $db;
     $user_id = findUser($chat_id);
     if(!is_null($user_id)) {
-        $data = [
-            "city" => $city,
-        ];
+        $data = ["city" => $city];
         $db->where ("id_session", $user_id);
         $db->update ('session', $data);
     }
