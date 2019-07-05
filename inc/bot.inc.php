@@ -2,6 +2,20 @@
 
 
 const BASE_KEYBOARD = "/help"; 
+const HELP_INFO = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах." .
+" Для вывода информации введите <название населенного пункта> и <количество дней>.\n";
+const MIN_TEMPERATURE = ". \nМинимальная температура ";
+const MAX_TEMPERATURE = "\nМаксимальная температура ";
+const CITY = "Населенный пункт ";
+const ADD =  " добавлен";
+
+const START_COMMAND = "/start";
+const HELP_COMMAND = "/help";
+const ADD_COMMAND = "Добавить в избранное";
+const SUBSCRIBE_COMMAND = "/subscribe";
+const UNSUBSCRIBE_COMMAND = "/unsubscribe";
+
+
 
 
 function initBot($token)
@@ -27,9 +41,7 @@ function startComandHandler($telegram, $chat_id, $keyboard, $name)
 
 function helpComandHandler($telegram, $chat_id)
 {
-    $reply = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах.\n"
-       . "Для вывода информации введите <название населенного пункта> и <количество дней>.\n"
-       . "Для добавления города в избранные введите комманду /add <название города>";
+    $reply = HELP_INFO;
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
 }
 
@@ -56,11 +68,11 @@ function showForecast($telegram, $chat_id, $text, &$keyboard)
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 
         foreach ($weather['forecast'] as $dailyForecast) {
-            $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . ". \nМинимальная температура " . $dailyForecast['min_temp'] . "\nМаксимальная температура " . $dailyForecast['max_temp'];
+            $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . MIN_TEMPERATURE . $dailyForecast['min_temp'] . MAX_TEMPERATURE . $dailyForecast['max_temp'];
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
         }
     }else{
-        $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " не найден";
+        $reply = CITY . '<b>' . $city . '</b>' . " не найден";
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
     }  
 }
@@ -72,7 +84,7 @@ function addFavoriteCity($telegram, $chat_id, $city)
     $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $reply = "Населенный пункт " . '<b>' . $city . '</b>' . " добавлен";
+    $reply = CITY . $city .  ADD;
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
@@ -80,9 +92,7 @@ function addFavoriteCityFromDB($telegram, $chat_id)
 {
     $city = getLastRequestedCity($chat_id);
     addFavoriteCity($telegram, $chat_id, $city );
-}
-     
-     
+}   
 
 function addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard)
 {
@@ -120,6 +130,8 @@ function unsubscribeOnFavoriteCity($telegram, $chat_id)
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
+function handleComand
+
 function startBot($telegram, $result)
 {
     $text = mb_strtolower($result["message"]["text"]); //Текст сообщения
@@ -128,18 +140,16 @@ function startBot($telegram, $result)
     $keyboard = [[BASE_KEYBOARD]];
     initKeyboard($keyboard, $chat_id);
     if ($text) {
-        if ($text == "/start") {
+        if ($text == START_COMMAND) {
             startComandHandler($telegram, $chat_id, $keyboard, $name);
             
-        } elseif ($text == "/help") {
+        } elseif ($text == HELP_COMMAND) {
             helpComandHandler($telegram, $chat_id);
-        } elseif ($text == "Добавить в избранное") {
+        } elseif ($text == ADD_COMMAND) {
             addFavoriteCityFromDB($telegram, $chat_id);
-        } elseif (getSubstBeforeBlank($text) == "/add") {
-            addFavoriteCityFromRequest($telegram, $chat_id, $text, $keyboard);
-        } elseif ($text == "/subscribe") {
+        } elseif ($text == SUBSCRIBE_COMMAND) {
             subscribeOnFavoriteCity($telegram, $chat_id);    
-        } elseif ($text == "/unsubscribe") {
+        } elseif ($text == SUBSCRIBE_COMMAND) {
             unsubscribeOnFavoriteCity($telegram, $chat_id);
         } else{
             showForecast($telegram, $chat_id, $text, $keyboard);

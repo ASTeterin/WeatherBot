@@ -6,21 +6,6 @@ function getSubstBeforeBlank($str)
 }
 
 
-
-function removeExtraSymbols($str, $symbol)
-{
-    $words = [];
-    $tempStr = '';
-    $words = explode($symbol , $str);
-    foreach ($words as $word) {
-        if ($word != '') {
-            $tempStr .= $word . $symbol;
-        }
-    }
-    return rtrim($tempStr, $symbol);
-}
-
-
 function parseForecast($response)
 {
     $data = array();
