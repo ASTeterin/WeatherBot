@@ -11,7 +11,7 @@ const ADD =  " добавлен";
 
 const START_COMMAND = "/start";
 const HELP_COMMAND = "/help";
-const ADD_COMMAND = "Добавить в избранное";
+const ADD_COMMAND = "добавить в избранное";
 const SUBSCRIBE_COMMAND = "/subscribe";
 const UNSUBSCRIBE_COMMAND = "/unsubscribe";
 
