@@ -114,6 +114,20 @@ function unsubscribeOnFavoriteCity($telegram, $chatId)
     $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
+functiont switchSubscription($telegram, $chatId)
+{
+    if (getSubscribedStatus($chatId)) {
+        removeSubscribedStatus($chatId);
+        $reply = "Подписка отменена";  
+    } else {
+        setSubscribedStatus($chatId);
+        $reply = "Подписка оформлена";
+    }
+    $keyboard = getKeyboard($chatId);
+    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
+}
+
 function handleComamnd($command, $telegram, $chatId, $keyboard, $name)
 {
     switch ($command) {
@@ -126,11 +140,8 @@ function handleComamnd($command, $telegram, $chatId, $keyboard, $name)
         case ADD_COMMAND:
             addFavoriteCity($telegram, $chatId);
             break;
-        case SUBSCRIBE_COMMAND:
-            subscribeOnFavoriteCity($telegram, $chatId);
-            break;
-        case UNSUBSCRIBE_COMMAND:
-            unsubscribeOnFavoriteCity($telegram, $chatId);
+        case SUBSCRIBE_COMMAND, UNSUBSCRIBE_COMMAND: 
+            switchSubscription($telegram, $chatId)
             break;
         default:
             showForecast($telegram, $chatId, $command, $keyboard);
