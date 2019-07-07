@@ -75,8 +75,9 @@ function showForecast($telegram, $chatId, $text, &$keyboard)
     }  
 }
 
-function addFavoriteCity($telegram, $chatId, $city)
+function addFavoriteCity($telegram, $chatId)
 {
+    $city = getLastRequestedCity($chatId);
     saveFavoriteCity($city, $chatId);
     removeSubscribedStatus($chatId);
     $keyboard = [[BASE_KEYBOARD]];
@@ -86,17 +87,6 @@ function addFavoriteCity($telegram, $chatId, $city)
     $telegram->sendMessage([ 'chat_id' => $chatId, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
-function addFavoriteCityFromDB($telegram, $chatId)
-{
-    $city = getLastRequestedCity($chatId);
-    addFavoriteCity($telegram, $chatId, $city );
-}   
-
-function addFavoriteCityFromRequest($telegram, $chatId, $text, $keyboard)
-{
-    $city = substr($text, 5);
-    addFavoriteCity($telegram, $chatId, $city );
-}
 
 function initKeyboard(&$keyboard, $chatId)
 {
@@ -138,7 +128,7 @@ function handleComamnd($command, $telegram, $chatId, $keyboard, $name)
             helpComandHandler($telegram, $chatId);
             break;
         case ADD_COMMAND:
-            addFavoriteCityFromDB($telegram, $chatId);
+            addFavoriteCity($telegram, $chatId);
             break;
         case SUBSCRIBE_COMMAND:
             subscribeOnFavoriteCity($telegram, $chatId);
