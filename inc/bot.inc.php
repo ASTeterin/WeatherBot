@@ -1,6 +1,5 @@
 <?php
 
-
 const BASE_KEYBOARD = "/help"; 
 const HELP_INFO = "Бот позволяет посмотреть прогноз погоды в любых населенных пунктах." .
 " Для вывода информации введите <название населенного пункта> и <количество дней>.\n";
@@ -14,7 +13,6 @@ const HELP_COMMAND = "/help";
 const ADD_COMMAND = "добавить в избранное";
 const SUBSCRIBE_COMMAND = "/subscribe";
 const UNSUBSCRIBE_COMMAND = "/unsubscribe";
-
 
 function startComandHandler($telegram, $chatId, $keyboard, $name)
 {
@@ -83,7 +81,6 @@ function addFavoriteCity($telegram, $chatId)
     $telegram->sendMessage([ 'chat_id' => $chatId, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
-
 function getKeyboard($chatId)
 {
     $keyboard = [[BASE_KEYBOARD]];
@@ -94,24 +91,6 @@ function getKeyboard($chatId)
         $keyboard[] = ($isSubscribed == 1)? ["/unsubscribe"]: ["/subscribe"];
     }
     return $keyboard;  
-}
-
-function subscribeOnFavoriteCity($telegram, $chatId)
-{
-    setSubscribedStatus($chatId);
-    $keyboard = getKeyboard($chatId);
-    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $reply = "Подписка оформлена";
-    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
-}
-
-function unsubscribeOnFavoriteCity($telegram, $chatId)
-{
-    removeSubscribedStatus($chatId);
-    $keyboard = getKeyboard($chatId);
-    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $reply = "Подписка отменена";
-    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
 }
 
 function switchSubscription($telegram, $chatId)

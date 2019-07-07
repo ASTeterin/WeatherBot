@@ -29,7 +29,6 @@ function findUser($chatId)
     return (isset($user)) ? $user['id_session'] : null; 
 }
 
-
 function addCity($city): ?int
 {
     global $db;
@@ -50,7 +49,6 @@ function getCityName($idCity): ?string
     $city_str = $db->getOne("city");
     return (isset($city_str)) ? $city_str['name'] : null;  
 }
-
 
 function saveFavoriteCity($city, $chatId)
 {
@@ -76,7 +74,6 @@ function saveLastRequestedCity($city, $chatId)
     }
 }
 
-
 function getFavoriteCity($chatId)
 {
     global $db;
@@ -95,8 +92,6 @@ function getLastRequestedCity($chatId)
     return (isset($city[0]['name']))? $city[0]['name'] : null; 
 }
 
-
-
 function getSubscribedStatus($chatId)
 {
     global $db;
@@ -104,8 +99,6 @@ function getSubscribedStatus($chatId)
     $user = $db->getOne("session");
     return $user['subscription']; 
 }
-
-
 
 function addNewUser($chatId, $name)
 {  
@@ -119,8 +112,6 @@ function addNewUser($chatId, $name)
     }
 }
 
-
-
 function setSubscribedStatus($chatId)
 {
     global $db;
@@ -133,7 +124,6 @@ function setSubscribedStatus($chatId)
         $db->update('session', $data);
     }
 }
-
 
 function removeSubscribedStatus($chatId)
 {
