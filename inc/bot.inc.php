@@ -57,7 +57,7 @@ function showForecast($telegram, $chatId, $text, &$keyboard)
     {
         if ($city != getLastRequestedCity($chatId)) {
             saveLastRequestedCity($city, $chatId);
-            $keyboard[] = ["/add " . $city];
+            $keyboard[] = [ADD_COMMAND];
         }
         $decodeResponse = json_decode($response, true); 
         $weather = parseForecast($decodeResponse);
