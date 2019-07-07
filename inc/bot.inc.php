@@ -16,12 +16,6 @@ const SUBSCRIBE_COMMAND = "/subscribe";
 const UNSUBSCRIBE_COMMAND = "/unsubscribe";
 
 
-function initBot($token)
-{
-    $telegram = new Api($token); //Устанавливаем токен, полученный у BotFather
-    return $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
-}
-
 function startComandHandler($telegram, $chatId, $keyboard, $name)
 {
     $reply = "Здравствуйте, ";
@@ -83,29 +77,29 @@ function addFavoriteCity($telegram, $chatId)
     $city = getLastRequestedCity($chatId);
     saveFavoriteCity($city, $chatId);
     removeSubscribedStatus($chatId);
-    $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chatId);
+    $keyboard = getKeyboard($chatId);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = CITY . $city .  ADD;
     $telegram->sendMessage([ 'chat_id' => $chatId, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 }
 
 
-function initKeyboard(&$keyboard, $chatId)
+function getKeyboard($chatId)
 {
+    $keyboard = [[BASE_KEYBOARD]];
     $favoriteCity = getFavoriteCity($chatId);
     if (!is_null($favoriteCity)) {
         $isSubscribed = getSubscribedStatus($chatId);
         $keyboard[] = [$favoriteCity];
         $keyboard[] = ($isSubscribed == 1)? ["/unsubscribe"]: ["/subscribe"];
-    }  
+    }
+    return $keyboard;  
 }
 
 function subscribeOnFavoriteCity($telegram, $chatId)
 {
     setSubscribedStatus($chatId);
-    $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chatId);
+    $keyboard = getKeyboard($chatId);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Подписка оформлена";
     $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
@@ -114,8 +108,7 @@ function subscribeOnFavoriteCity($telegram, $chatId)
 function unsubscribeOnFavoriteCity($telegram, $chatId)
 {
     removeSubscribedStatus($chatId);
-    $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chatId);
+    $keyboard = getKeyboard($chatId);
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $reply = "Подписка отменена";
     $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);   
@@ -149,8 +142,7 @@ function startBot($telegram, $result)
     $text = mb_strtolower($result["message"]["text"]); //Текст сообщения
     $chatId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [[BASE_KEYBOARD]];
-    initKeyboard($keyboard, $chatId);
+    $keyboard = getKeyboard($chatId);
     if ($text) {
         handleComamnd($text, $telegram, $chatId, $keyboard, $name);
     }    
