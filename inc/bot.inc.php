@@ -43,7 +43,19 @@ function helpComandHandler($telegram, $chatId)
     $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply ]);
 }
 
-function showForecast($telegram, $chatId, $text, &$keyboard)
+function printForecast($telegram, $chatId, $forecast, $keyboard)
+{
+    $reply =  $weather['location']['city'] . ", " . $weather['location']['country'];
+    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+
+    foreach ($weather['forecast'] as $dailyForecast) {
+        $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . MIN_TEMPERATURE . $dailyForecast['min_temp'] . MAX_TEMPERATURE . $dailyForecast['max_temp'];
+        $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply]);
+    }
+}
+
+function showForecast($telegram, $chatId, $text, $keyboard)
 {
     $city = trim(mb_eregi_replace('[0-9]', '', $text));
     $days = ($city == $text)? 1:  preg_replace("/[^,.0-9]/", '', $text);
@@ -51,23 +63,15 @@ function showForecast($telegram, $chatId, $text, &$keyboard)
     
     $response = getForecast($city, $days);
     $decodeResponse = json_decode($response, true); 
-    $weather = parseForecast($decodeResponse);
+    $forecast = parseForecast($decodeResponse);
 
-    if ($weather)
+    if ($forecast)
     {
         if ($city != getLastRequestedCity($chatId)) {
             saveLastRequestedCity($city, $chatId);
             $keyboard[] = [ADD_COMMAND];
-        }
-       
-        $reply =  $weather['location']['city'] . ", " . $weather['location']['country'];
-        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-        $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-
-        foreach ($weather['forecast'] as $dailyForecast) {
-            $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . MIN_TEMPERATURE . $dailyForecast['min_temp'] . MAX_TEMPERATURE . $dailyForecast['max_temp'];
-            $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply]);
-        }
+        } 
+        printForecast($telegram, $chatId, $forecast, $keyboar);   
     }else{
         $reply = CITY . '<b>' . $city . '</b>' . " не найден";
         $telegram->sendMessage([ 'chat_id' => $chatId, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
