@@ -12,8 +12,12 @@ function parseForecast($response)
     $location = array();
     $forecast = array();
 
-    $city = $response['location']['name'];
-    $country = $response['location']['country'];
+    if (isset($response['error']['code'])) {
+        return null;
+    }
+
+    $city = (isset($response['location']['name'])) ? $response['location']['name'] : null;
+    $country = (isset($response['location']['country'])) ? $response['location']['country'] : null;
     $location['city'] = $city;
     $location['country'] = $country; 
   

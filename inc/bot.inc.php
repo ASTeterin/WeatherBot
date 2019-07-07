@@ -16,8 +16,6 @@ const SUBSCRIBE_COMMAND = "/subscribe";
 const UNSUBSCRIBE_COMMAND = "/unsubscribe";
 
 
-
-
 function initBot($token)
 {
     $telegram = new Api($token); //Устанавливаем токен, полученный у BotFather
@@ -52,15 +50,16 @@ function showForecast($telegram, $chatId, $text, &$keyboard)
     $days = ($days > 10)? 10 : $days; 
     
     $response = getForecast($city, $days);
+    $decodeResponse = json_decode($response, true); 
+    $weather = parseForecast($decodeResponse);
 
-    if (!strpos($response, "error"))
+    if ($weather)
     {
         if ($city != getLastRequestedCity($chatId)) {
             saveLastRequestedCity($city, $chatId);
             $keyboard[] = [ADD_COMMAND];
         }
-        $decodeResponse = json_decode($response, true); 
-        $weather = parseForecast($decodeResponse);
+       
         $reply =  $weather['location']['city'] . ", " . $weather['location']['country'];
         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
         $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);
