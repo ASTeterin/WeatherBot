@@ -56,7 +56,7 @@ function showForecast($telegram, $chatId, $text, &$keyboard)
     if (!strpos($response, "error"))
     {
         if ($city != getLastRequestedCity($chatId)) {
-            addLastRequestedCity($city, $chatId);
+            saveLastRequestedCity($city, $chatId);
             $keyboard[] = ["/add " . $city];
         }
         $decodeResponse = json_decode($response, true); 
