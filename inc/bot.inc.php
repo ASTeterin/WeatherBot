@@ -49,7 +49,7 @@ function printForecast($telegram, $chatId, $forecast, $keyboard)
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 
-    foreach ($weather['forecast'] as $dailyForecast) {
+    foreach ($forecast['forecast'] as $dailyForecast) {
         $reply = $dailyForecast['date'] . ": " . $dailyForecast['condition'] . MIN_TEMPERATURE . $dailyForecast['min_temp'] . MAX_TEMPERATURE . $dailyForecast['max_temp'];
         $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply]);
     }
