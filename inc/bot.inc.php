@@ -45,7 +45,7 @@ function helpComandHandler($telegram, $chatId)
 
 function printForecast($telegram, $chatId, $forecast, $keyboard)
 {
-    $reply =  $weather['location']['city'] . ", " . $weather['location']['country'];
+    $reply =  $forecast['location']['city'] . ", " . $forecast['location']['country'];
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
     $telegram->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 
@@ -71,7 +71,7 @@ function showForecast($telegram, $chatId, $text, $keyboard)
             saveLastRequestedCity($city, $chatId);
             $keyboard[] = [ADD_COMMAND];
         } 
-        printForecast($telegram, $chatId, $forecast, $keyboar);   
+        printForecast($telegram, $chatId, $forecast, $keyboard);   
     }else{
         $reply = CITY . '<b>' . $city . '</b>' . " не найден";
         $telegram->sendMessage([ 'chat_id' => $chatId, 'parse_mode' => 'HTML', 'disable_web_page_preview' => true, 'text' => $reply ]);
