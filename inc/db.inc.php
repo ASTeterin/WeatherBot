@@ -68,7 +68,6 @@ function addNewUser($chatId, $name)
     }
 }
 
-
 function addLastRequestedCity($city, $chatId)
 {
     global $db;
@@ -112,4 +111,22 @@ function getSubscribeList()
     global $db;
     $db->where("subscription", 1);
     return $db->get("session", null, ["id_chat", "city"]);
+}
+
+function addCity($city)
+{
+    if (is_null($findCity($city))) {
+        $data = [
+            "name" => $city,
+        ];
+        $id = $db->insert('city', $data);
+    }    
+}
+
+function findCity($city)
+{
+    global $db;
+    $db->where("name", $city);
+    $city_str = $db->getOne("session");
+    return $city_str['id_city']; 
 }
