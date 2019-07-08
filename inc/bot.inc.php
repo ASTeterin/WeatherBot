@@ -91,7 +91,6 @@ function showForecast($telegram, $chatId, $text, $keyboard)
     {
         if ($city != getLastRequestedCity($chatId)) {
             saveLastRequestedCity($city, $chatId);
-            $keyboard[] = [$city];
             $keyboard[] = [ADD_COMMAND];
         } 
         printForecast($telegram, $chatId, $forecast, $keyboard);   
