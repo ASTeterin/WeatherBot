@@ -141,8 +141,9 @@ function removeSubscribedStatus($chatId)
 function getSubscribeList()
 {
     global $db;
-    $db->where("subscription", 1);
-    return $db->get("session", null, ["id_chat", "city"]);
+    $db->join('session', 'session.city = city.id_city', 'LEFT');
+    $db->where('session.subscription', 1);
+    return $db->get('city', null, ['id_chat', 'city.name']);
 }
 
 
