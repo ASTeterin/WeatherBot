@@ -28,7 +28,6 @@ function startComandHandler($telegram, $chatId, $keyboard, $name)
             $reply .= $name;
         }
     $reply .= WELCOME_LINE;
-    $reply .= $chatId;
     $reply_markup = $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false]);
     $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
     addNewUser($chatId, $name);
@@ -92,6 +91,7 @@ function showForecast($telegram, $chatId, $text, $keyboard)
     {
         if ($city != getLastRequestedCity($chatId)) {
             saveLastRequestedCity($city, $chatId);
+            $keyboard[] = [$city];
             $keyboard[] = [ADD_COMMAND];
         } 
         printForecast($telegram, $chatId, $forecast, $keyboard);   
