@@ -7,10 +7,10 @@ const MAX_TEMPERATURE = "\nМаксимальная температура ";
 const CITY = "Населенный пункт ";
 const ADD =  " добавлен";
 const SUBSCRIBE = 'Подписка оформлена';
-const UNSUBSCRIBE = '"Подписка отменена';
+const UNSUBSCRIBE = 'Подписка отменена';
 const HELLO = 'Здравствуйте, ';
 const STRANGER = 'незнакомец';
-const WELCOME_LINE = '\nВы находитсь в боте Погода в городах мира!';
+const WELCOME_LINE = ' Вы находитсь в боте Погода в городах мира!';
 
 const BASE_KEYBOARD = "/help"; 
 const START_COMMAND = "/start";
@@ -28,9 +28,9 @@ function startComandHandler($telegram, $chatId, $keyboard, $name)
             $reply .= $name;
         }
     $reply .= WELCOME_LINE;
+    $reply .= $chatId;
     $reply_markup = $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false]);
     $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
-    
     addNewUser($chatId, $name);
 }
 
