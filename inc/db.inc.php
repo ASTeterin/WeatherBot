@@ -16,16 +16,16 @@ function createDbConnection()
 function findCity($city): ?int
 {
     global $db;
-    $db->where("name", $city);
-    $city_str = $db->getOne("city");
+    $db->where('name', $city);
+    $city_str = $db->getOne('city');
     return (isset($city_str)) ? $city_str['id_city'] : null; 
 }
 
 function findUser($chatId)
 {
     global $db;
-    $db->where("id_chat", $chatId);
-    $user = $db->getOne("session");
+    $db->where('id_chat', $chatId);
+    $user = $db->getOne('session');
     return (isset($user)) ? $user['id_session'] : null; 
 }
 
@@ -35,7 +35,7 @@ function addCity($city): ?int
     $id = findCity($city);
     if (is_null($id)) {
         $data = [
-            "name" => $city,
+            'name' => $city,
         ];
         $id = $db->insert('city', $data);
     }
@@ -45,8 +45,8 @@ function addCity($city): ?int
 function getCityName($idCity): ?string
 {
     global $db;
-    $db->where("id_city", $idCity);
-    $city_str = $db->getOne("city");
+    $db->where('id_city', $idCity);
+    $city_str = $db->getOne('city');
     return (isset($city_str)) ? $city_str['name'] : null;  
 }
 
@@ -56,8 +56,8 @@ function saveFavoriteCity($city, $chatId)
     $cityId = addCity($city);
     $userId = findUser($chatId);
     if(!is_null($userId)) {
-        $data = ["city" => $cityId];
-        $db->where("id_session", $userId);
+        $data = ['city' => $cityId];
+        $db->where('id_session', $userId);
         $db->update('session', $data);
     }
 }
@@ -68,8 +68,8 @@ function saveLastRequestedCity($city, $chatId)
     $cityId = addCity($city);
     $userId = findUser($chatId);
     if(!is_null($userId)) {
-        $data = ["last_request" => $cityId];
-        $db->where("id_session", $userId);
+        $data = ['last_request' => $cityId];
+        $db->where('id_session', $userId);
         $db->update('session', $data);
     }
 }
@@ -78,7 +78,7 @@ function getFavoriteCity($chatId)
 {
     global $db;
     $db->join('session', 'session.city = city.id_city', 'LEFT');
-    $db->where("id_chat", $chatId);
+    $db->where('id_chat', $chatId);
     $city = $db->get('city', null, 'city.name');
     return (isset($city[0]['name']))? $city[0]['name'] : null; 
 }
@@ -87,7 +87,7 @@ function getLastRequestedCity($chatId)
 {
     global $db;
     $db->join('session', 'session.last_request = city.id_city', 'LEFT');
-    $db->where("id_chat", $chatId);
+    $db->where('id_chat', $chatId);
     $city = $db->get('city', null, 'city.name');
     return (isset($city[0]['name']))? $city[0]['name'] : null; 
 }
@@ -95,8 +95,8 @@ function getLastRequestedCity($chatId)
 function getSubscribedStatus($chatId)
 {
     global $db;
-    $db->where("id_chat", $chatId);
-    $user = $db->getOne("session");
+    $db->where('id_chat', $chatId);
+    $user = $db->getOne('session');
     return $user['subscription']; 
 }
 
@@ -105,8 +105,8 @@ function addNewUser($chatId, $name)
     global $db;
     if (is_null(findUser($chatId))) {
         $data = [
-            "name" => $name,
-            "id_chat" => $chatId
+            'name' => $name,
+            'id_chat' => $chatId
         ];
         $id = $db->insert('session', $data);
     }
@@ -118,9 +118,9 @@ function setSubscribedStatus($chatId)
     $user_id = findUser($chatId);
     if(!is_null($user_id)) {
         $data = [
-            "subscription" => 1,
+            'subscription' => 1,
         ];
-        $db->where("id_session", $user_id);
+        $db->where('id_session', $user_id);
         $db->update('session', $data);
     }
 }
@@ -131,9 +131,9 @@ function removeSubscribedStatus($chatId)
     $user_id = findUser($chatId);
     if(!is_null($user_id)) {
         $data = [
-            "subscription" => 0,
+            'subscription' => 0,
         ];
-        $db->where("id_session", $user_id);
+        $db->where('id_session', $user_id);
         $db->update('session', $data);
     }
 }
