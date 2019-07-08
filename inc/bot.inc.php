@@ -161,9 +161,13 @@ function handleComamnd($command, $telegram, $chatId, $keyboard, $name)
 
 function startBot($telegram, $result)
 {
-    $text = (isset($result["message"]["text"])) ? mb_strtolower($result["message"]["text"]) : null; //Текст сообщения
+    /*$text = (isset($result["message"]["text"])) ? mb_strtolower($result["message"]["text"]) : null; //Текст сообщения
     $chatId = (isset($result["message"]["chat"]["id"])) ? $result["message"]["chat"]["id"] : null; //Уникальный идентификатор пользователя
-    $name =  (isset($result["message"]["from"]["username"])) ? $result["message"]["from"]["username"] : null; //Юзернейм пользователя
+    $name =  (isset($result["message"]["from"]["username"])) ? $result["message"]["from"]["username"] : null; //Юзернейм пользователя*/
+    $text = mb_strtolower($result["message"]["text"]); //Текст сообщения
+    $chatId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
+    $name = $result["message"]["from"]["username"];
+    
     if ($chatId) {
         addNewUser($chatId, $name);
     }
