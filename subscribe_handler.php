@@ -7,7 +7,6 @@ $telegram = new Api(API_TOKEN);
 
 function sendSubscribe($telegram, $chatId, $city)
 {
-    
     $url = API_URL . urlencode($city) . "&days=2&lang=ru";
     $day = 2;
     $response = getForecast($city, $day);
@@ -28,7 +27,7 @@ function runSubscribe($telegram)
     $users = getSubscribeList();
     foreach ($users as $user) {
         $chatId = $user['id_chat'];
-        $favoriteCity = $user['city'];
+        $favoriteCity = $user['name'];
         sendSubscribe($telegram, $chatId, $favoriteCity);
     }
 }
